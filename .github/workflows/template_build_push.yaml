@@ -1,0 +1,82 @@
+name: Template Build and Push Docker Image
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      image_path:
+        required: true
+        type: string
+    secrets:
+      ghcr_token:
+        required: true
+
+jobs:
+  build_publish_docker_image:
+    name: Push Docker image to Github Container Reg
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Release Version and Lowercase Repo
+        run: |
+          echo "RELEASE_VERSION=$(echo ${GITHUB_SHA} | head -c 8)" >> $GITHUB_ENV &&
+          echo "REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.ghcr_token }}
+
+      - name: Create Digest and Existing flag
+        run: |
+          echo "EXISTING=0" >> $GITHUB_ENV &&
+          echo "DIGEST=$(sha256sum <(find ./${{ inputs.image_path }}/. -type f -exec sha256sum {} \; | sort) | head -c 12)" >> $GITHUB_ENV
+      
+      - name: Check Docker if Digest already Existing
+        run: |
+          docker manifest inspect ghcr.io/${{ env.REPO }}/${{ inputs.image_name }}:sha256-${{ env.DIGEST }} > /dev/null || echo "EXISTING=$?" >> $GITHUB_ENV &&
+          echo $EXISTING
+
+      - name: Build and Push Docker Image
+        if: env.EXISTING == 1
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ${{ inputs.image_path }}
+          tags: |
+            ghcr.io/${{ env.REPO }}/${{ inputs.image_name }}:git-${{ env.RELEASE_VERSION }}
+            ghcr.io/${{ env.REPO }}/${{ inputs.image_name }}:sha256-${{ env.DIGEST }}
+            ghcr.io/${{ env.REPO }}/${{ inputs.image_name }}:latest
+    # name: Push Docker image to Github Container Reg
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - uses: actions/checkout@v2
+
+    #   - name: Set Release Version
+    #     run: echo "RELEASE_VERSION=${{inputs.commit_sha}}" >> $GITHUB_ENV
+    #   - name: Set Repo lowercase
+    #     run: echo "REPO=$(echo ${{github.event.repository.name}} | tr '[A-Z]' '[a-z]')" >> $GITHUB_ENV
+    #   - name: Set current date as env variable
+    #     run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+
+    #   - name: Login to Google Artifact Registry
+    #     uses: docker/login-action@v1
+    #     with:
+    #       registry: europe-west3-docker.pkg.dev
+    #       username: _json_key
+    #       password: ${{ secrets.gar_json_key }}
+
+
+    #   - name: Build and Push Docker Image
+    #     uses: docker/build-push-action@v2
+    #     with:
+    #       push: true
+    #       tags: |
+    #         ${{ secrets.google_gar_repo }}/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}-${{ env.TIMESTAMP }}
+    #         ${{ secrets.google_gar_repo }}/${{ github.event.repository.name }}:${{ env.RELEASE_VERSION }}
+    #         ${{ secrets.google_gar_repo }}/${{ github.event.repository.name }}:latest

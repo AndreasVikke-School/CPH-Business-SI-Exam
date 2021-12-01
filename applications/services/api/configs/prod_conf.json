@@ -1,0 +1,11 @@
+{
+    "postgres": {
+        "service": "postgres-service.services:50051"
+    },
+    "redis": {
+        "service": "redis-service.services:50051"
+    },
+    "kafka": {
+        "service": "kafka.kafka:9092"
+    }
+}

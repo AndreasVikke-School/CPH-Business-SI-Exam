@@ -1,0 +1,11 @@
+{
+    "postgres": {
+        "service": "localhost:50051"
+    },
+    "redis": {
+        "service": "localhost:50051"
+    },
+    "kafka": {
+        "service": "192.168.49.2:32371"
+    }
+}

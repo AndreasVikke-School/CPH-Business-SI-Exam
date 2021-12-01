@@ -1,0 +1,16 @@
+name: "main_images_build"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs: 
+  call-workflow-build-push-api-image:
+    name: Build and Push api service Docker Image
+    uses: andreasvikke/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
+    with:
+      image_name: api_service
+      image_path: "applications/services/api"
+    secrets:
+      ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
