@@ -42,4 +42,3 @@ variable "container_env" {
   type = map(string)
   default = {}
 }
-

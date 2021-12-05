@@ -19,7 +19,7 @@ resource "kubernetes_deployment" "service" {
       }
       spec {
         container {
-          image = "ghcr.io/andreasvikke/cph-business-si-exam/${var.image_name}:${var.image_version}"
+          image = "ghcr.io/andreasvikke/cph-business-ls-exam/${var.image_name}:${var.image_version}"
           name  = "${var.name_prefix}service-container"
           port {
             container_port = var.container_port
@@ -28,8 +28,8 @@ resource "kubernetes_deployment" "service" {
           dynamic "env" {
             for_each = var.container_env
             content {
-            name  = env.key
-            value = env.value
+              name  = env.key
+              value = env.value
             }
           }
         }

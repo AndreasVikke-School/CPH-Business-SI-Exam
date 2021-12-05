@@ -21,10 +21,13 @@ module "kafka_module" {
 module "postgres_module" {
   source = "./modules/postgres"
 }
-
 module "redis_module" {
   source = "./modules/redis"
 }
+module "rabbitmq_module" {
+  source = "./modules/rabbitmq"
+}
+
 resource "kubernetes_namespace" "services" {
   metadata {
     name = "services-si"

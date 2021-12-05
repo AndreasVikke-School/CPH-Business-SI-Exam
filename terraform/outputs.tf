@@ -7,3 +7,9 @@ output "pgadmin_ip" {
 output "kafdrop_ip" {
   value = module.kafka_module.kafdrop_ip
 }
+output "rabbitmq_ip" {
+  value = module.rabbitmq_module.rabbitmq_ip
+}
+output "rabbitmq_web_ip" {
+  value = module.rabbitmq_module.rabbitmq_web_ip
+}
