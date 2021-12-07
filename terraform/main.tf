@@ -27,6 +27,9 @@ module "redis_module" {
 module "rabbitmq_module" {
   source = "./modules/rabbitmq"
 }
+module "neo4j_module" {
+  source = "./modules/neo4j"
+}
 
 resource "kubernetes_namespace" "services" {
   metadata {
