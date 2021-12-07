@@ -1,5 +1,0 @@
-neo4jPassword: "P@ssword"
-
-volumes:
-  data:
-    mode: "defaultStorageClass"
