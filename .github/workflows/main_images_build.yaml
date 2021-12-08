@@ -8,7 +8,7 @@ on:
 jobs: 
   call-workflow-build-push-api-image:
     name: Build and Push api service Docker Image
-    uses: andreasvikke/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
+    uses: andreasvikke-school/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
     with:
       image_name: api_service
       image_path: "applications/services/api"

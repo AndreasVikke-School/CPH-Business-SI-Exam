@@ -1,4 +1,4 @@
-module github.com/andreasvikke/CPH-Bussines-LS-Exam/applications/services/api
+module github.com/andreasvikke-school/CPH-Bussines-LS-Exam/applications/services/api
 
 go 1.17
 
