@@ -54,3 +54,21 @@ module "api_service" {
     }
   }
 }
+
+module "postgres_service" {
+  source = "./modules/service"
+
+  name_prefix            = "postgres-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "postgres_service"
+  image_version          = var.postgres_service_image_version
+  container_port         = 50051
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 50051,
+      target_port = 50051
+    }
+  }
+}

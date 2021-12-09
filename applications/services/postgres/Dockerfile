@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM golang:1.16-alpine
 
-LABEL org.opencontainers.image.source https://github.com/AndreasVikke-School/cph-business-ls-exam
+LABEL org.opencontainers.image.source https://github.com/AndreasVikke-School/cph-business-si-exam
 
 WORKDIR /app
 
