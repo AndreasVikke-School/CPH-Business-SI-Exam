@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent"
 )
 
 // The LoanFunc type is an adapter to allow the use of ordinary

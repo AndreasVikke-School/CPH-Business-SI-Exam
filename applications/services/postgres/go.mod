@@ -1,4 +1,4 @@
-module github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres
+module github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres
 
 go 1.17
 

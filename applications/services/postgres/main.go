@@ -7,15 +7,15 @@ import (
 	"net"
 	"os"
 
-	eh "github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/errorhandler"
-	pb "github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/rpc"
+	eh "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/errorhandler"
+	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
 
 	"google.golang.org/grpc"
 )
 
 var (
 	configuration Configuration
-	port          = flag.Int("port", 50052, "The server port")
+	port          = flag.Int("port", 50051, "The server port")
 )
 
 type server struct {

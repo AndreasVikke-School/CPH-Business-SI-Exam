@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/migrate"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/migrate"
 
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/loan"
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/user"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/loan"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/user"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

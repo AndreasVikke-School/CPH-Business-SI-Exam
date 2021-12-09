@@ -8,8 +8,8 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/loan"
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/user"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/loan"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.

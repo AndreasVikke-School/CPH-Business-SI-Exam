@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent"
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/loan"
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/user"
-	pb "github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/rpc"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/loan"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/user"
+	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
 
 	_ "github.com/lib/pq"
 )

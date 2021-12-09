@@ -5,9 +5,9 @@ package enttest
 import (
 	"context"
 
-	"github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent"
+	"github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent"
 	// required by schema hooks.
-	_ "github.com/AndreasVikke-School/CPH-Bussines-SI-Exam/applications/services/postgres/ent/runtime"
+	_ "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
 )
