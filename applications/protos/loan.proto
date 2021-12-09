@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protos";
+option go_package = "/rpc";
+
+package rpc;
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service LoanService {
+  rpc GetLoan (google.protobuf.Int64Value) returns (Loan);
+  rpc GetAllLoans (google.protobuf.Empty) returns (LoanList);
+  rpc CreateLoan (Loan) returns (Loan);
+}
+
+message Loan {
+  int64 id = 1;
+  int64 userId = 2;
+  int64 entityId = 3;
+  Status status = 4;
+}
+
+message LoanList {
+  repeated Loan loans = 1;
+}
+
+enum Status {
+  RESERVED = 0;
+  PICKED = 1;
+  PACKED = 2;
+  SHIPPED = 3;
+}

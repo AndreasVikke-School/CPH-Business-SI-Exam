@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protos";
+option go_package = "/rpc";
+
+package rpc;
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service UserService {
+  rpc GetUser (google.protobuf.Int64Value) returns (User);
+  rpc GetAllUsers (google.protobuf.Empty) returns (UserList);
+  rpc CreateUser (User) returns (User);
+}
+
+message User {
+  int64 id = 1;
+  string username = 2;
+  int64 age = 3;
+  string password = 4;
+}
+
+message UserList {
+  repeated User users = 1;
+}
