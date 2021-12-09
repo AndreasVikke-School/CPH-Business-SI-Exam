@@ -5,12 +5,21 @@ on:
     branches:
       - main
 
-jobs: 
+jobs:
   call-workflow-build-push-api-image:
     name: Build and Push api service Docker Image
     uses: andreasvikke-school/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
     with:
       image_name: api_service
       image_path: "applications/services/api"
+    secrets:
+      ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
+
+  call-workflow-build-push-postgres-image:
+    name: Build and Push postgres service Docker Image
+    uses: andreasvikke-school/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
+    with:
+      image_name: postgres_service
+      image_path: "applications/services/postgres"
     secrets:
       ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
