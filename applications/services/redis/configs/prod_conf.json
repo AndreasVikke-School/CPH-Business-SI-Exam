@@ -1,5 +1,5 @@
 {
     "redis": {
-        "broker": "redis.redis-si:6379"
+        "broker": "redis-cluster.redis-si:6379"
     }
 }
