@@ -4,7 +4,6 @@ package rpc
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -20,9 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LogServiceClient interface {
-	GetLog(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*Log, error)
-	GetAllLogs(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LogList, error)
-	GetAllLogsByUser(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LogList, error)
+	GetLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Log, error)
+	GetAllLogs(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LogList, error)
 	CreateLog(ctx context.Context, in *Log, opts ...grpc.CallOption) (*Log, error)
 }
 
@@ -34,7 +32,7 @@ func NewLogServiceClient(cc grpc.ClientConnInterface) LogServiceClient {
 	return &logServiceClient{cc}
 }
 
-func (c *logServiceClient) GetLog(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*Log, error) {
+func (c *logServiceClient) GetLog(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*Log, error) {
 	out := new(Log)
 	err := c.cc.Invoke(ctx, "/rpc.LogService/GetLog", in, out, opts...)
 	if err != nil {
@@ -43,18 +41,9 @@ func (c *logServiceClient) GetLog(ctx context.Context, in *wrappers.Int64Value, 
 	return out, nil
 }
 
-func (c *logServiceClient) GetAllLogs(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LogList, error) {
+func (c *logServiceClient) GetAllLogs(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LogList, error) {
 	out := new(LogList)
 	err := c.cc.Invoke(ctx, "/rpc.LogService/GetAllLogs", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *logServiceClient) GetAllLogsByUser(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LogList, error) {
-	out := new(LogList)
-	err := c.cc.Invoke(ctx, "/rpc.LogService/GetAllLogsByUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,9 +63,8 @@ func (c *logServiceClient) CreateLog(ctx context.Context, in *Log, opts ...grpc.
 // All implementations must embed UnimplementedLogServiceServer
 // for forward compatibility
 type LogServiceServer interface {
-	GetLog(context.Context, *wrappers.Int64Value) (*Log, error)
-	GetAllLogs(context.Context, *empty.Empty) (*LogList, error)
-	GetAllLogsByUser(context.Context, *wrappers.Int64Value) (*LogList, error)
+	GetLog(context.Context, *LogRequest) (*Log, error)
+	GetAllLogs(context.Context, *wrappers.Int64Value) (*LogList, error)
 	CreateLog(context.Context, *Log) (*Log, error)
 	mustEmbedUnimplementedLogServiceServer()
 }
@@ -85,14 +73,11 @@ type LogServiceServer interface {
 type UnimplementedLogServiceServer struct {
 }
 
-func (UnimplementedLogServiceServer) GetLog(context.Context, *wrappers.Int64Value) (*Log, error) {
+func (UnimplementedLogServiceServer) GetLog(context.Context, *LogRequest) (*Log, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLog not implemented")
 }
-func (UnimplementedLogServiceServer) GetAllLogs(context.Context, *empty.Empty) (*LogList, error) {
+func (UnimplementedLogServiceServer) GetAllLogs(context.Context, *wrappers.Int64Value) (*LogList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllLogs not implemented")
-}
-func (UnimplementedLogServiceServer) GetAllLogsByUser(context.Context, *wrappers.Int64Value) (*LogList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllLogsByUser not implemented")
 }
 func (UnimplementedLogServiceServer) CreateLog(context.Context, *Log) (*Log, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLog not implemented")
@@ -111,7 +96,7 @@ func RegisterLogServiceServer(s grpc.ServiceRegistrar, srv LogServiceServer) {
 }
 
 func _LogService_GetLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(wrappers.Int64Value)
+	in := new(LogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -123,13 +108,13 @@ func _LogService_GetLog_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/rpc.LogService/GetLog",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogServiceServer).GetLog(ctx, req.(*wrappers.Int64Value))
+		return srv.(LogServiceServer).GetLog(ctx, req.(*LogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LogService_GetAllLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
+	in := new(wrappers.Int64Value)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -141,25 +126,7 @@ func _LogService_GetAllLogs_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/rpc.LogService/GetAllLogs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogServiceServer).GetAllLogs(ctx, req.(*empty.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LogService_GetAllLogsByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(wrappers.Int64Value)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LogServiceServer).GetAllLogsByUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/rpc.LogService/GetAllLogsByUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogServiceServer).GetAllLogsByUser(ctx, req.(*wrappers.Int64Value))
+		return srv.(LogServiceServer).GetAllLogs(ctx, req.(*wrappers.Int64Value))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -196,10 +163,6 @@ var LogService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllLogs",
 			Handler:    _LogService_GetAllLogs_Handler,
-		},
-		{
-			MethodName: "GetAllLogsByUser",
-			Handler:    _LogService_GetAllLogsByUser_Handler,
 		},
 		{
 			MethodName: "CreateLog",

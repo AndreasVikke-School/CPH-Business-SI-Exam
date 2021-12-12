@@ -28,39 +28,43 @@ func GetRedisClient(config Configuration) *redis.ClusterClient {
 	})
 }
 
-func CreateLogInRedis(in *pb.Log, config Configuration) (int64, *LogEntry, error) {
+func CreateLogInRedis(in *pb.Log, config Configuration) (*LogEntry, error) {
 	rdb := GetRedisClient(config)
 	defer rdb.Close()
 
-	id, err := rdb.HLen(rdb.Context(), redis_key).Result()
+	userKey := fmt.Sprintf(`%s:%d`, redis_key, in.UserId)
+
+	id, err := rdb.HLen(rdb.Context(), userKey).Result()
 	if err != nil {
 		log.Printf("Hlen error: %s", err)
-		return 0, nil, err
+		return nil, err
 	}
 
 	unix := time.Now().UnixNano() / 1000000
-	dataAsJson := fmt.Sprintf(`{"userId": %d, "entityId": %d, "unix": %d}`, in.UserId, in.EntityId, unix)
+	dataAsJson := fmt.Sprintf(`{"entityId": %d, "unix": %d}`, in.EntityId, unix)
 
-	_, err = rdb.HSet(rdb.Context(), redis_key, (id + 1), dataAsJson).Result()
+	_, err = rdb.HSet(rdb.Context(), userKey, (id + 1), dataAsJson).Result()
 	if err != nil {
 		log.Printf("Hset error: %s", err)
-		return 0, nil, err
+		return nil, err
 	}
 
-	return id + 1, &LogEntry{UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
+	return &LogEntry{Id: id + 1, UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
 }
 
-func GetLogFromRedis(logId int64, config Configuration) (*LogEntry, error) {
+func GetLogFromRedis(userId int64, logId int64, config Configuration) (*LogEntry, error) {
 	rdb := GetRedisClient(config)
 	defer rdb.Close()
 
-	exists := rdb.HExists(rdb.Context(), redis_key, strconv.FormatInt(logId, 10)).Val()
+	userKey := fmt.Sprintf(`%s:%d`, redis_key, userId)
+
+	exists := rdb.HExists(rdb.Context(), userKey, strconv.FormatInt(logId, 10)).Val()
 	if !exists {
 		log.Printf("log not found in redis")
 		return nil, errors.New("log not found in redis")
 	}
 
-	result, err := rdb.HGet(rdb.Context(), redis_key, strconv.FormatInt(logId, 10)).Result()
+	result, err := rdb.HGet(rdb.Context(), userKey, strconv.FormatInt(logId, 10)).Result()
 	if err != nil {
 		log.Printf("HGet error: %s", err)
 		return nil, err
@@ -68,16 +72,19 @@ func GetLogFromRedis(logId int64, config Configuration) (*LogEntry, error) {
 
 	var data *LogEntry
 	json.Unmarshal([]byte(result), &data)
+	data.UserId = userId
 	data.Id = logId
 
 	return data, nil
 }
 
-func GetAllLogsFromRedis(config Configuration) ([]*LogEntry, error) {
+func GetAllLogsFromRedis(userId int64, config Configuration) ([]*LogEntry, error) {
 	rdb := GetRedisClient(config)
 	defer rdb.Close()
 
-	result, err := rdb.HGetAll(rdb.Context(), redis_key).Result()
+	userKey := fmt.Sprintf(`%s:%d`, redis_key, userId)
+
+	result, err := rdb.HGetAll(rdb.Context(), userKey).Result()
 	if err != nil {
 		log.Printf("HGet error: %s", err)
 		return nil, err
@@ -89,6 +96,7 @@ func GetAllLogsFromRedis(config Configuration) ([]*LogEntry, error) {
 		var data *LogEntry
 		json.Unmarshal([]byte(res), &data)
 		id, _ := strconv.ParseInt(key, 10, 64)
+		data.UserId = userId
 		data.Id = id
 		logs = append(logs, data)
 	}
