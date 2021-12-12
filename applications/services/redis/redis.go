@@ -16,7 +16,7 @@ var redis_key = "log_entry"
 
 type LogEntry struct {
 	Id       int64 `json:"id,omitempty"`
-	UserId   int64 `json:"studentId,omitempty"`
+	UserId   int64 `json:"userId,omitempty"`
 	EntityId int64 `json:"entityId,omitempty"`
 	Unix     int64 `json:"unix,omitempty"`
 }
@@ -39,7 +39,7 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (int64, *LogEntry, error
 	}
 
 	unix := time.Now().UnixNano() / 1000000
-	dataAsJson := fmt.Sprintf(`{"userId": %d, "entryId": %d, "unix": %d}`, in.UserId, in.EntityId, unix)
+	dataAsJson := fmt.Sprintf(`{"userId": %d, "entityId": %d, "unix": %d}`, in.UserId, in.EntityId, unix)
 
 	_, err = rdb.HSet(rdb.Context(), redis_key, (id + 1), dataAsJson).Result()
 	if err != nil {
@@ -50,26 +50,27 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (int64, *LogEntry, error
 	return id + 1, &LogEntry{UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
 }
 
-func GetLogFromRedis(logId int64, config Configuration) (int64, *LogEntry, error) {
+func GetLogFromRedis(logId int64, config Configuration) (*LogEntry, error) {
 	rdb := GetRedisClient(config)
 	defer rdb.Close()
 
 	exists := rdb.HExists(rdb.Context(), redis_key, strconv.FormatInt(logId, 10)).Val()
 	if !exists {
 		log.Printf("log not found in redis")
-		return 0, nil, errors.New("log not found in redis")
+		return nil, errors.New("log not found in redis")
 	}
 
 	result, err := rdb.HGet(rdb.Context(), redis_key, strconv.FormatInt(logId, 10)).Result()
 	if err != nil {
 		log.Printf("HGet error: %s", err)
-		return 0, nil, err
+		return nil, err
 	}
 
 	var data *LogEntry
 	json.Unmarshal([]byte(result), &data)
+	data.Id = logId
 
-	return logId, data, nil
+	return data, nil
 }
 
 func GetAllLogsFromRedis(config Configuration) ([]*LogEntry, error) {
@@ -84,9 +85,11 @@ func GetAllLogsFromRedis(config Configuration) ([]*LogEntry, error) {
 	fmt.Println(result)
 
 	var logs []*LogEntry
-	for _, res := range result {
+	for key, res := range result {
 		var data *LogEntry
 		json.Unmarshal([]byte(res), &data)
+		id, _ := strconv.ParseInt(key, 10, 64)
+		data.Id = id
 		logs = append(logs, data)
 	}
 

@@ -9,11 +9,11 @@ import (
 )
 
 func (s *server) GetLog(ctx context.Context, in *wrapperspb.Int64Value) (*pb.Log, error) {
-	id, log, err := GetLogFromRedis(in.Value, configuration)
+	log, err := GetLogFromRedis(in.Value, configuration)
 	if err != nil {
 		return nil, err
 	}
-	return &pb.Log{Id: id, UserId: log.UserId, EntityId: log.EntityId, Unix: log.Unix}, nil
+	return &pb.Log{Id: log.Id, UserId: log.UserId, EntityId: log.EntityId, Unix: log.Unix}, nil
 }
 
 func (s *server) GetAllLogs(ctx context.Context, in *emptypb.Empty) (*pb.LogList, error) {
