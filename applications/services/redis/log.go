@@ -7,7 +7,7 @@ import (
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
-func (s *server) GetLog(ctx context.Context, in *pb.LogRequest) (*pb.Log, error) {
+func (s *server) GetLogByUser(ctx context.Context, in *pb.LogRequest) (*pb.Log, error) {
 	log, err := GetLogFromRedis(in.UserId, in.Id, configuration)
 	if err != nil {
 		return nil, err
@@ -15,7 +15,7 @@ func (s *server) GetLog(ctx context.Context, in *pb.LogRequest) (*pb.Log, error)
 	return &pb.Log{Id: log.Id, UserId: log.UserId, EntityId: log.EntityId, Unix: log.Unix}, nil
 }
 
-func (s *server) GetAllLogs(ctx context.Context, in *wrapperspb.Int64Value) (*pb.LogList, error) {
+func (s *server) GetAllLogsByUser(ctx context.Context, in *wrapperspb.Int64Value) (*pb.LogList, error) {
 	logs, err := GetAllLogsFromRedis(in.Value, configuration)
 	if err != nil {
 		return nil, err

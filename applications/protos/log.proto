@@ -7,8 +7,8 @@ package rpc;
 import "google/protobuf/wrappers.proto";
 
 service LogService {
-  rpc GetLog (LogRequest) returns (Log);
-  rpc GetAllLogs (google.protobuf.Int64Value) returns (LogList);
+  rpc GetLogByUser (LogRequest) returns (Log);
+  rpc GetAllLogsByUser (google.protobuf.Int64Value) returns (LogList);
   rpc CreateLog (Log) returns (Log);
 }
 
