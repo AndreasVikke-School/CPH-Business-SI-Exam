@@ -16,7 +16,7 @@ func (s *server) GetLog(ctx context.Context, in *wrapperspb.Int64Value) (*pb.Log
 	return &pb.Log{Id: id, UserId: log.UserId, EntityId: log.EntityId, Unix: log.Unix}, nil
 }
 
-func (s *server) GetAllLoans(ctx context.Context, in *emptypb.Empty) (*pb.LogList, error) {
+func (s *server) GetAllLogs(ctx context.Context, in *emptypb.Empty) (*pb.LogList, error) {
 	logs, err := GetAllLogsFromRedis(configuration)
 	if err != nil {
 		return nil, err
