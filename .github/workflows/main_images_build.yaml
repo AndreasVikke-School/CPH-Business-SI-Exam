@@ -32,3 +32,12 @@ jobs:
       image_path: "applications/services/redis"
     secrets:
       ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
+  
+  call-workflow-build-push-neo4j-image:
+    name: Build and Push neo4j service Docker Image
+    uses: andreasvikke-school/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
+    with:
+      image_name: neo4j_service
+      image_path: "applications/services/neo4j"
+    secrets:
+      ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
