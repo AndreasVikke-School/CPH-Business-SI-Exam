@@ -15,6 +15,7 @@ import (
 var redis_key = "log_entry"
 
 type LogEntry struct {
+	Id       int64 `json:"id,omitempty"`
 	UserId   int64 `json:"studentId,omitempty"`
 	EntityId int64 `json:"entityId,omitempty"`
 	Unix     int64 `json:"unix,omitempty"`
@@ -46,7 +47,7 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (int64, *LogEntry, error
 		return 0, nil, err
 	}
 
-	return id, &LogEntry{UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
+	return id + 1, &LogEntry{UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
 }
 
 func GetLogFromRedis(logId int64, config Configuration) (int64, *LogEntry, error) {
@@ -69,4 +70,25 @@ func GetLogFromRedis(logId int64, config Configuration) (int64, *LogEntry, error
 	json.Unmarshal([]byte(result), &data)
 
 	return logId, data, nil
+}
+
+func GetAllLogsFromRedis(config Configuration) ([]*LogEntry, error) {
+	rdb := GetRedisClient(config)
+	defer rdb.Close()
+
+	result, err := rdb.HGetAll(rdb.Context(), redis_key).Result()
+	if err != nil {
+		log.Printf("HGet error: %s", err)
+		return nil, err
+	}
+	fmt.Println(result)
+
+	var logs []*LogEntry
+	for _, res := range result {
+		var data *LogEntry
+		json.Unmarshal([]byte(res), &data)
+		logs = append(logs, data)
+	}
+
+	return logs, nil
 }

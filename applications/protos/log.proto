@@ -22,5 +22,5 @@ message Log {
 }
 
 message LogList {
-  repeated Log loans = 1;
+  repeated Log logs = 1;
 }
