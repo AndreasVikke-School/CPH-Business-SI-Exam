@@ -19,8 +19,7 @@ var (
 )
 
 type server struct {
-	pb.UnimplementedUserServiceServer
-	pb.UnimplementedLoanServiceServer
+	pb.UnimplementedLogServiceServer
 }
 
 func main() {
@@ -29,8 +28,7 @@ func main() {
 	eh.PanicOnError(err, "failed to listen")
 
 	s := grpc.NewServer()
-	pb.RegisterUserServiceServer(s, &server{})
-	pb.RegisterLoanServiceServer(s, &server{})
+	pb.RegisterLogServiceServer(s, &server{})
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])
