@@ -10,6 +10,6 @@ COPY ./go.sum .
 RUN go mod download
 
 COPY . .
-RUN go build -o ./redis_service
+RUN go build -o ./postgres_service
 
-CMD [ "./redis_service", "prod" ]
+CMD [ "./postgres_service", "prod" ]

@@ -10,8 +10,7 @@ import (
 type Configuration struct {
 	Redis struct {
 		Broker string `json:"broker"`
-		Port   string `json:"port"`
-	} `json:"postgres"`
+	} `json:"redis"`
 }
 
 func getConfig(env string) Configuration {
