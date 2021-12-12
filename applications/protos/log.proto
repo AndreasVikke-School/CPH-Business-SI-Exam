@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protos";
+option go_package = "/rpc";
+
+package rpc;
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service LogService {
+  rpc GetLog (google.protobuf.Int64Value) returns (Log);
+  rpc GetAllLogs (google.protobuf.Empty) returns (LogList);
+  rpc GetAllLogsByUser (google.protobuf.Int64Value) returns (LogList);
+  rpc CreateLog (Log) returns (Log);
+}
+
+message Log {
+  int64 id = 1;
+  int64 userId = 2;
+  int64 entityId = 3;
+  int64 unix = 4;
+}
+
+message LogList {
+  repeated Log loans = 1;
+}

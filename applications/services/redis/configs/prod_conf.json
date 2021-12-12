@@ -1,0 +1,6 @@
+{
+    "redis": {
+        "broker": "redis.redis-si",
+        "port": "6379"
+    }
+}

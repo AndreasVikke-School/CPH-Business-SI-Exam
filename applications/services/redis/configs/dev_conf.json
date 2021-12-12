@@ -1,0 +1,6 @@
+{
+    "redis": {
+        "broker": "localhost",
+        "port": "6379"
+    }
+}

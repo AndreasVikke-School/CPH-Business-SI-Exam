@@ -29,6 +29,19 @@ func (s *server) GetAllLoans(ctx context.Context, in *emptypb.Empty) (*pb.LoanLi
 	return &pb.LoanList{Loans: result}, nil
 }
 
+func (s *server) GetAllLoansByUser(ctx context.Context, in *wrapperspb.Int64Value) (*pb.LoanList, error) {
+	loans, users, err := PostgresGetAllLoansByUser(context.Background(), in.Value, configuration)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*pb.Loan
+	for idx, l := range loans {
+		result = append(result, &pb.Loan{Id: int64(l.ID), UserId: int64(users[idx].ID), EntityId: l.EntityId, Status: pb.Status(pb.Status_value[string(l.Status)])})
+	}
+	return &pb.LoanList{Loans: result}, nil
+}
+
 func (s *server) CreateLoan(ctx context.Context, in *pb.Loan) (*pb.Loan, error) {
 	createdLoan, err := PostgresInsertNewLoan(ctx, in, configuration)
 

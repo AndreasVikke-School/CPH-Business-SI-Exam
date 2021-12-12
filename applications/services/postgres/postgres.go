@@ -150,4 +150,22 @@ func PostgresGetAllLoans(ctx context.Context, config Configuration) ([]*ent.Loan
 	return loans, users, nil
 }
 
+func PostgresGetAllLoansByUser(ctx context.Context, userId int64, config Configuration) ([]*ent.Loan, []*ent.User, error) {
+	client := GetPostgresClient(config)
+	defer client.Close()
+
+	loans, err := client.User.Query().Where(user.ID(int(userId))).QueryLoans().All(ctx)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed querying users: %w", err)
+	}
+
+	var users []*ent.User
+	for _, l := range loans {
+		users = append(users, l.QueryUser().OnlyX(ctx))
+	}
+
+	log.Println("loans returned: ", loans)
+	return loans, users, nil
+}
+
 // ==== Loan Postgres END ====

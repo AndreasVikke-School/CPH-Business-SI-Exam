@@ -10,6 +10,7 @@ import "google/protobuf/empty.proto";
 service LoanService {
   rpc GetLoan (google.protobuf.Int64Value) returns (Loan);
   rpc GetAllLoans (google.protobuf.Empty) returns (LoanList);
+  rpc GetAllLoansByUser (google.protobuf.Empty) returns (LoanList);
   rpc CreateLoan (Loan) returns (Loan);
 }
 
