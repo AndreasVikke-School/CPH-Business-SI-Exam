@@ -31,18 +31,18 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (int64, *LogEntry, error
 	rdb := GetRedisClient(config)
 	defer rdb.Close()
 
-	id, err := rdb.Incr(rdb.Context(), redis_key).Result()
+	id, err := rdb.HLen(rdb.Context(), redis_key).Result()
 	if err != nil {
-		log.Printf("%s", err)
+		log.Printf("Hlen error: %s", err)
 		return 0, nil, err
 	}
 
 	unix := time.Now().UnixNano() / 1000000
 	dataAsJson := fmt.Sprintf(`{"userId": %d, "entryId": %d, "unix": %d}`, in.UserId, in.EntityId, unix)
 
-	_, err = rdb.HSet(rdb.Context(), redis_key, strconv.FormatInt(id, 10), dataAsJson).Result()
+	_, err = rdb.HSet(rdb.Context(), redis_key, (id + 1), dataAsJson).Result()
 	if err != nil {
-		log.Printf("%s", err)
+		log.Printf("Hset error: %s", err)
 		return 0, nil, err
 	}
 
@@ -61,7 +61,7 @@ func GetLogFromRedis(logId int64, config Configuration) (int64, *LogEntry, error
 
 	result, err := rdb.HGet(rdb.Context(), redis_key, strconv.FormatInt(logId, 10)).Result()
 	if err != nil {
-		log.Printf("%s", err)
+		log.Printf("HGet error: %s", err)
 		return 0, nil, err
 	}
 
