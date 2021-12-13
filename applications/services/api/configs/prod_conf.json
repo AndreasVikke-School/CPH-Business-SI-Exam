@@ -7,5 +7,10 @@
     },
     "kafka": {
         "service": "kafka.kafka-si:9092"
+    },
+    "rabbitmq": {
+        "service": "rabbitmq.rabbitmq-si:5672",
+        "username": "rabbitmq",
+        "password": "P@ssword!"
     }
 }
