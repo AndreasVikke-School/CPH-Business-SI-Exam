@@ -42,7 +42,7 @@ jobs:
     secrets:
       ghcr_token: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
 
-   call-workflow-build-push-rabbitmq-image:
+  call-workflow-build-push-rabbitmq-image:
     name: Build and Push rabbitmq service Docker Image
     uses: andreasvikke-school/CPH-Business-SI-Exam/.github/workflows/template_build_push.yaml@main
     with:
