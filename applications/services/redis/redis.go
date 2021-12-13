@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"time"
 
 	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
 	"github.com/go-redis/redis/v8"
@@ -40,8 +39,7 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (*LogEntry, error) {
 		return nil, err
 	}
 
-	unix := time.Now().UnixNano() / 1000000
-	dataAsJson := fmt.Sprintf(`{"entityId": %d, "unix": %d}`, in.EntityId, unix)
+	dataAsJson := fmt.Sprintf(`{"entityId": %d, "unix": %d}`, in.EntityId, in.Unix)
 
 	_, err = rdb.HSet(rdb.Context(), userKey, (id + 1), dataAsJson).Result()
 	if err != nil {
@@ -49,7 +47,7 @@ func CreateLogInRedis(in *pb.Log, config Configuration) (*LogEntry, error) {
 		return nil, err
 	}
 
-	return &LogEntry{Id: id + 1, UserId: in.UserId, EntityId: in.EntityId, Unix: unix}, nil
+	return &LogEntry{Id: id + 1, UserId: in.UserId, EntityId: in.EntityId, Unix: in.Unix}, nil
 }
 
 func GetLogFromRedis(userId int64, logId int64, config Configuration) (*LogEntry, error) {
