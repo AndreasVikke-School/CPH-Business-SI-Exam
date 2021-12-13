@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	eh "github.com/andreasvikke-school/CPH-Bussines-LS-Exam/applications/services/api/errorhandler"
+	eh "github.com/andreasvikke-school/CPH-Bussiness-SI-Exam/applications/services/api/errorhandler"
 )
 
 type Configuration struct {

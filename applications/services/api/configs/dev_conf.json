@@ -6,6 +6,6 @@
         "service": "localhost:50051"
     },
     "kafka": {
-        "service": "192.168.49.2:32371"
+        "service": "localhost:9094"
     }
 }

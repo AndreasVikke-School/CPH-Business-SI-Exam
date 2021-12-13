@@ -24,6 +24,7 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/api/hello_world/", HelloWorld)
+	router.POST("/api/create_log/", CreateLog)
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])
