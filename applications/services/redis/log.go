@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
+	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/redis/rpc"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 

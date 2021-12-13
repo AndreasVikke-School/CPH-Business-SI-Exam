@@ -7,7 +7,7 @@ import (
 	"log"
 	"strconv"
 
-	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
+	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/redis/rpc"
 	"github.com/go-redis/redis/v8"
 )
 
