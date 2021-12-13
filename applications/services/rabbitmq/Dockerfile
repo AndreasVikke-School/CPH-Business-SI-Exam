@@ -8,4 +8,4 @@ WORKDIR /app
 
 COPY . .
 
-CMD ["python3", "consume.py"]
+CMD ["python3", "-u", "consume.py"]
