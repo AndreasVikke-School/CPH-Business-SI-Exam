@@ -90,3 +90,21 @@ module "redis_service" {
     }
   }
 }
+
+module "kafka_service" {
+  source = "./modules/service"
+
+  name_prefix            = "kafka-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "kafka_service"
+  image_version          = var.kafka_service_image_version
+  container_port         = 5000
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 5000,
+      target_port = 5000
+    }
+  }
+}
