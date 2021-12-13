@@ -6,6 +6,6 @@
         "service": "redis-service.services:50051"
     },
     "kafka": {
-        "service": "kafka.kafka:9092"
+        "service": "kafka.kafka-si:9092"
     }
 }
