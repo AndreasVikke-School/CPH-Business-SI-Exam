@@ -7,8 +7,8 @@ import (
 	"net"
 	"os"
 
-	eh "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/errorhandler"
-	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/postgres/rpc"
+	eh "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/redis/errorhandler"
+	pb "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/redis/rpc"
 
 	"google.golang.org/grpc"
 )

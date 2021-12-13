@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	eh "github.com/andreasvikke-school/CPH-Bussines-LS-Exam/applications/services/api/errorhandler"
+	eh "github.com/andreasvikke-school/CPH-Bussiness-SI-Exam/applications/services/api/errorhandler"
 )
 
 type Configuration struct {
@@ -17,6 +17,11 @@ type Configuration struct {
 	Kafka struct {
 		Service string `json:"service"`
 	} `json:"kafka"`
+	Rabbitmq struct {
+		Service  string `json:"service"`
+		Username string `json:"username"`
+		Password string `json:"password"`
+	} `json:"rabbitmq"`
 }
 
 func getConfig(env string) Configuration {

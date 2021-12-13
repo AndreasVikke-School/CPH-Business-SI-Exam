@@ -10,6 +10,6 @@ COPY ./go.sum .
 RUN go mod download
 
 COPY . .
-RUN go build -o ./postgres_service
+RUN go build -o ./kafka_service
 
-CMD [ "./postgres_service", "prod" ]
+CMD [ "./kafka_service", "prod" ]

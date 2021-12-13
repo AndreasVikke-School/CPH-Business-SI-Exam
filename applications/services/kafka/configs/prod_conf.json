@@ -1,0 +1,8 @@
+{
+    "kafka": {
+        "broker": "kafka.kafka-si:9092"
+    },
+    "redis": {
+        "broker": "redis-service.services-si:50051"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "kafka": {
+        "broker": "10.104.250.119:9094"
+    },
+    "redis": {
+        "broker": "localhost:50051"
+    }
+}

@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"os"
 
-	eh "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/redis/errorhandler"
+	eh "github.com/AndreasVikke-School/CPH-Bussiness-SI-Exam/applications/services/kafka/errorhandler"
 )
 
 type Configuration struct {
+	Kafka struct {
+		Broker string `json:"broker"`
+	} `json:"kafka"`
 	Redis struct {
 		Broker string `json:"broker"`
 	} `json:"redis"`

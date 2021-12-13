@@ -6,6 +6,11 @@
         "service": "redis-service.services:50051"
     },
     "kafka": {
-        "service": "kafka.kafka:9092"
+        "service": "kafka.kafka-si:9092"
+    },
+    "rabbitmq": {
+        "service": "rabbitmq.rabbitmq-si:5672",
+        "username": "rabbitmq",
+        "password": "P@ssword!"
     }
 }
