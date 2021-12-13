@@ -18,7 +18,7 @@ resource "helm_release" "rabbitmq" {
   }
   set {
     name  = "replicaCount"
-    value = "3"
+    value = var.rabbitmq.replicas
   }
   set {
     name  = "auth.username"

@@ -19,7 +19,7 @@ resource "kubernetes_stateful_set" "kafka" {
   }
 
   spec {
-    replicas     = 1
+    replicas     = var.kafka.replicas
     service_name = "kafka"
 
     selector {

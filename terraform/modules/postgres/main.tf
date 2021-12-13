@@ -16,6 +16,10 @@ resource "helm_release" "postgres" {
     name  = "postgresql.password"
     value = "P@ssword!"
   }
+  set {
+    name  = "postgresql.replicaCount"
+    value = var.postgres.replicas
+  }
 }
 
 # ==== POSTGRES SERVICE ====

@@ -23,9 +23,14 @@ resource "helm_release" "neo4j" {
     name  = "core.service.type"
     value = "LoadBalancer"
   }
+
+  set {
+    name  = "core.numberOfServers"
+    value = var.neo4j.core_replicas
+  }
   set {
     name  = "readReplica.numberOfServers"
-    value = "3"
+    value = var.neo4j.replica_replicas
   }
 }
 

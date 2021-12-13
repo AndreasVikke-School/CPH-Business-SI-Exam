@@ -17,18 +17,23 @@ provider "helm" {
 
 module "kafka_module" {
   source = "./modules/kafka"
+  kafka  = var.kafka
 }
 module "postgres_module" {
-  source = "./modules/postgres"
+  source   = "./modules/postgres"
+  postgres = var.postgres
 }
 module "redis_module" {
   source = "./modules/redis"
+  redis  = var.redis
 }
 module "rabbitmq_module" {
-  source = "./modules/rabbitmq"
+  source   = "./modules/rabbitmq"
+  rabbitmq = var.rabbitmq
 }
 module "neo4j_module" {
   source = "./modules/neo4j"
+  neo4j  = var.neo4j
 }
 
 resource "kubernetes_namespace" "services" {
