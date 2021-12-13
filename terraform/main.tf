@@ -90,3 +90,21 @@ module "redis_service" {
     }
   }
 }
+
+module "neo4j_service" {
+  source = "./modules/service"
+
+  name_prefix            = "neo4j-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "neo4j_service"
+  image_version          = var.neo4j_service_image_version
+  container_port         = 50051
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 50051,
+      target_port = 50051
+    }
+  }
+}

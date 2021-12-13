@@ -1,1 +1,2 @@
 neo4j==4.4.0
+grpcio-tools==1.42.0
