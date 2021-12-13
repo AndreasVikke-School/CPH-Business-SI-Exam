@@ -19,7 +19,7 @@ func CreateLog(c *gin.Context) {
 	err := c.BindJSON(&logEntry)
 	eh.PanicOnError(err, "Couldn't bind JSON")
 	logEntry.UnixTime = time.Now().UnixNano() / 1000000
-	ProduceCheckInToKafka(logEntry)
+	ProduceLogEntryToKafka(logEntry)
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"queued": "success",
 	})

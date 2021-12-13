@@ -9,19 +9,15 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
-func ProduceCheckInToKafka(logEntry LogEntry) {
+func ProduceLogEntryToKafka(logEntry LogEntry) {
 	topic := "logEntry"
 	partition := 0
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	println("hello1")
-
 	conn, err := kafka.DialLeader(ctx, "tcp", configuration.Kafka.Service, topic, partition)
 	eh.PanicOnError(err, "failed to dial leader")
-
-	println("hello2")
 
 	c, err := json.Marshal(logEntry)
 	eh.PanicOnError(err, "Can't convert to JSON")

@@ -1,1 +1,49 @@
 syntax = "proto3";
+
+option csharp_namespace = "Protos";
+option go_package = "/rpc";
+
+package rpc;
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service BookService {
+  rpc GetBook (google.protobuf.Int64Value) returns (Book);
+  rpc GetBookByTitle (Title) returns (Book);
+  rpc GetBookSimpleByTitle (Title) returns (BookSimple);
+  rpc GetBooksBySearch (Title) returns (BookList);
+  rpc GetAllBooks (google.protobuf.Empty) returns (BookList);
+  // Parameters should be changed from title to isbn
+  rpc GetBookRecsAuthor (Title) returns (BookSimpleList);
+  rpc GetBookRecsYear (Title) returns (BookSimpleList);
+  // rpc GetBookRecsgenre (Book) returns (BookList);
+}
+
+message Title {
+    string title = 1;
+}
+
+message Book {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  string author = 4;
+  int64 amount = 5;
+  int64 year = 6;
+}
+
+message BookSimple {
+  int64 id = 1;
+  string name = 2;
+  string author = 3;
+  int64 year = 4;
+}
+
+message BookList {
+  repeated Book books = 1;
+}
+
+message BookSimpleList {
+  repeated BookSimple books = 1;
+}
+
