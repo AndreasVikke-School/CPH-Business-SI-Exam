@@ -8,8 +8,9 @@ ENV NEOUSER="neo4j"
 ENV NEOPASS="P@ssword!"
 
 COPY requirements.txt requirements.txt
-RUN apk add g++
 RUN pip3 install --upgrade pip
+RUN apk add build-base linux-headers
+RUN apk add g++
 RUN pip3 install -r requirements.txt
 
 COPY . .
