@@ -2,6 +2,7 @@ api_service_image_version      = "sha256-ac6be4a0ef4b"
 postgres_service_image_version = "sha256-c7bfce869745"
 redis_service_image_version    = "sha256-e760e8feac0b"
 kafka_service_image_version    = "sha256-1164cad5aeb3"
+rabbitmq_service_image_version = "sha256-807a5e090464"
 
 
 neo4j = {

@@ -23,6 +23,11 @@ variable "neo4j_service_image_version" {
   default = "latest"
 }
 
+variable "rabbitmq_service_image_version" {
+  type    = string
+  default = "latest"
+}
+
 variable "neo4j" {
   type = object({
     core_replicas    = number,
