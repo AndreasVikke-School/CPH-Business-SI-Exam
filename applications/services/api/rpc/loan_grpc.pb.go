@@ -4,11 +4,11 @@ package rpc
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,9 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoanServiceClient interface {
-	GetLoan(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*Loan, error)
-	GetAllLoans(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LoanList, error)
-	GetAllLoansByUser(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LoanList, error)
+	GetLoan(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*Loan, error)
+	GetAllLoans(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LoanList, error)
+	GetAllLoansByUser(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*LoanList, error)
 	CreateLoan(ctx context.Context, in *Loan, opts ...grpc.CallOption) (*Loan, error)
 }
 
@@ -34,7 +34,7 @@ func NewLoanServiceClient(cc grpc.ClientConnInterface) LoanServiceClient {
 	return &loanServiceClient{cc}
 }
 
-func (c *loanServiceClient) GetLoan(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*Loan, error) {
+func (c *loanServiceClient) GetLoan(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*Loan, error) {
 	out := new(Loan)
 	err := c.cc.Invoke(ctx, "/rpc.LoanService/GetLoan", in, out, opts...)
 	if err != nil {
@@ -43,7 +43,7 @@ func (c *loanServiceClient) GetLoan(ctx context.Context, in *wrappers.Int64Value
 	return out, nil
 }
 
-func (c *loanServiceClient) GetAllLoans(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LoanList, error) {
+func (c *loanServiceClient) GetAllLoans(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LoanList, error) {
 	out := new(LoanList)
 	err := c.cc.Invoke(ctx, "/rpc.LoanService/GetAllLoans", in, out, opts...)
 	if err != nil {
@@ -52,7 +52,7 @@ func (c *loanServiceClient) GetAllLoans(ctx context.Context, in *empty.Empty, op
 	return out, nil
 }
 
-func (c *loanServiceClient) GetAllLoansByUser(ctx context.Context, in *wrappers.Int64Value, opts ...grpc.CallOption) (*LoanList, error) {
+func (c *loanServiceClient) GetAllLoansByUser(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*LoanList, error) {
 	out := new(LoanList)
 	err := c.cc.Invoke(ctx, "/rpc.LoanService/GetAllLoansByUser", in, out, opts...)
 	if err != nil {
@@ -74,9 +74,9 @@ func (c *loanServiceClient) CreateLoan(ctx context.Context, in *Loan, opts ...gr
 // All implementations must embed UnimplementedLoanServiceServer
 // for forward compatibility
 type LoanServiceServer interface {
-	GetLoan(context.Context, *wrappers.Int64Value) (*Loan, error)
-	GetAllLoans(context.Context, *empty.Empty) (*LoanList, error)
-	GetAllLoansByUser(context.Context, *wrappers.Int64Value) (*LoanList, error)
+	GetLoan(context.Context, *wrapperspb.Int64Value) (*Loan, error)
+	GetAllLoans(context.Context, *emptypb.Empty) (*LoanList, error)
+	GetAllLoansByUser(context.Context, *wrapperspb.Int64Value) (*LoanList, error)
 	CreateLoan(context.Context, *Loan) (*Loan, error)
 	mustEmbedUnimplementedLoanServiceServer()
 }
@@ -85,13 +85,13 @@ type LoanServiceServer interface {
 type UnimplementedLoanServiceServer struct {
 }
 
-func (UnimplementedLoanServiceServer) GetLoan(context.Context, *wrappers.Int64Value) (*Loan, error) {
+func (UnimplementedLoanServiceServer) GetLoan(context.Context, *wrapperspb.Int64Value) (*Loan, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLoan not implemented")
 }
-func (UnimplementedLoanServiceServer) GetAllLoans(context.Context, *empty.Empty) (*LoanList, error) {
+func (UnimplementedLoanServiceServer) GetAllLoans(context.Context, *emptypb.Empty) (*LoanList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllLoans not implemented")
 }
-func (UnimplementedLoanServiceServer) GetAllLoansByUser(context.Context, *wrappers.Int64Value) (*LoanList, error) {
+func (UnimplementedLoanServiceServer) GetAllLoansByUser(context.Context, *wrapperspb.Int64Value) (*LoanList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllLoansByUser not implemented")
 }
 func (UnimplementedLoanServiceServer) CreateLoan(context.Context, *Loan) (*Loan, error) {
@@ -111,7 +111,7 @@ func RegisterLoanServiceServer(s grpc.ServiceRegistrar, srv LoanServiceServer) {
 }
 
 func _LoanService_GetLoan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(wrappers.Int64Value)
+	in := new(wrapperspb.Int64Value)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -123,13 +123,13 @@ func _LoanService_GetLoan_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/rpc.LoanService/GetLoan",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanServiceServer).GetLoan(ctx, req.(*wrappers.Int64Value))
+		return srv.(LoanServiceServer).GetLoan(ctx, req.(*wrapperspb.Int64Value))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LoanService_GetAllLoans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -141,13 +141,13 @@ func _LoanService_GetAllLoans_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/rpc.LoanService/GetAllLoans",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanServiceServer).GetAllLoans(ctx, req.(*empty.Empty))
+		return srv.(LoanServiceServer).GetAllLoans(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LoanService_GetAllLoansByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(wrappers.Int64Value)
+	in := new(wrapperspb.Int64Value)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _LoanService_GetAllLoansByUser_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/rpc.LoanService/GetAllLoansByUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanServiceServer).GetAllLoansByUser(ctx, req.(*wrappers.Int64Value))
+		return srv.(LoanServiceServer).GetAllLoansByUser(ctx, req.(*wrapperspb.Int64Value))
 	}
 	return interceptor(ctx, in, info, handler)
 }
