@@ -65,35 +65,31 @@ func GetAllLoans(c *gin.Context) {
 	}
 }
 
-// func GetAllLoansByUser(c *gin.Context) {
-// 	userId := c.Param("id")
-// 	id, err := strconv.ParseInt(userId, 10, 64)
-// 	eh.PanicOnError(err, "failed to parse loanId to int64")
+func GetAllLoansByUser(c *gin.Context) {
+	userId := c.Param("id")
+	id, err := strconv.ParseInt(userId, 10, 64)
+	eh.PanicOnError(err, "failed to parse loanId to int64")
 
-// 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
-// 	eh.PanicOnError(err, "failed to connect to grpc")
-// 	defer conn.Close()
+	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
+	eh.PanicOnError(err, "failed to connect to grpc")
+	defer conn.Close()
 
-// 	con := pb.NewLoanServiceClient(conn)
-// 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-// 	defer cancel()
+	con := pb.NewLoanServiceClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
 
-// 	loans, err := con.GetAllLoansByUser(ctx, &emptypb.Empty{})
-// 	// loansList := []Loan{}
-// 	println(id)
-// 	for _, l := range loans.Loans {
-// 		println(l.UserId)
-// 		// if l.UserId == id {
-// 		// 	loansList = append(loansList, Loan{Id: l.Id, UserId: l.UserId, EntityId: l.EntityId, Status: l.Status})
-// 		// }
-// 	}
+	loans, err := con.GetAllLoansByUser(ctx, &wrapperspb.Int64Value{Value: id})
+	loansList := []Loan{}
+	for _, l := range loans.Loans {
+		loansList = append(loansList, Loan{Id: l.Id, UserId: l.UserId, EntityId: l.EntityId, Status: l.Status})
+	}
 
-// 	// if err != nil {
-// 	// 	c.Status(http.StatusNotFound)
-// 	// } else {
-// 	// 	c.IndentedJSON(http.StatusOK, loansList)
-// 	// }
-// }
+	if err != nil {
+		c.Status(http.StatusNotFound)
+	} else {
+		c.IndentedJSON(http.StatusOK, loansList)
+	}
+}
 
 func CreateLoan(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())

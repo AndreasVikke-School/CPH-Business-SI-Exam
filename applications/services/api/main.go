@@ -57,7 +57,7 @@ func main() {
 	router.POST("/api/create_loan/", CreateLoan)
 	router.GET("/api/get_loan/:id", GetLoan)
 	router.GET("/api/get_loans/", GetAllLoans)
-	// router.GET("/api/get_loans_by_user/:id", GetAllLoansByUser)
+	router.GET("/api/get_loans_by_user/:id", GetAllLoansByUser)
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])
