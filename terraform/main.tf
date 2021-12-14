@@ -17,18 +17,23 @@ provider "helm" {
 
 module "kafka_module" {
   source = "./modules/kafka"
+  kafka  = var.kafka
 }
 module "postgres_module" {
-  source = "./modules/postgres"
+  source   = "./modules/postgres"
+  postgres = var.postgres
 }
 module "redis_module" {
   source = "./modules/redis"
+  redis  = var.redis
 }
 module "rabbitmq_module" {
-  source = "./modules/rabbitmq"
+  source   = "./modules/rabbitmq"
+  rabbitmq = var.rabbitmq
 }
 module "neo4j_module" {
   source = "./modules/neo4j"
+  neo4j  = var.neo4j
 }
 
 resource "kubernetes_namespace" "services" {
@@ -91,20 +96,38 @@ module "redis_service" {
   }
 }
 
-module "rabbitmq_service" {
+module "kafka_service" {
   source = "./modules/service"
 
-  name_prefix            = "rabbitmq-"
+  name_prefix            = "kafka-"
   namespace              = kubernetes_namespace.services.metadata.0.name
-  image_name             = "rabbitmq_service"
-  image_version          = var.rabbitmq_service_image_version
-  container_port         = 50051
+  image_name             = "kafka_service"
+  image_version          = var.kafka_service_image_version
+  container_port         = 5000
   container_replications = 2
   service_type           = "ClusterIP"
   service_ports = {
     server = {
-      port        = 50051,
-      target_port = 50051
+      port        = 5000,
+      target_port = 5000
+    }
+  }
+}
+
+module "rabbitmq_service" {
+  source = "./modules/service"
+
+  name_prefix            = "kafka-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "kafka_service"
+  image_version          = var.kafka_service_image_version
+  container_port         = 5000
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 5000,
+      target_port = 5000
     }
   }
 }

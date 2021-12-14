@@ -41,7 +41,7 @@ resource "kubernetes_stateful_set" "redis_cluster" {
   }
 
   spec {
-    replicas     = 6
+    replicas     = var.redis.replicas
     service_name = "redis-cluster"
 
     selector {

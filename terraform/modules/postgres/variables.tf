@@ -12,3 +12,9 @@ variable "postgress_password" {
   type    = string
   default = "P@ssword!"
 }
+
+variable "postgres" {
+  type = object({
+    replicas = number
+  })
+}

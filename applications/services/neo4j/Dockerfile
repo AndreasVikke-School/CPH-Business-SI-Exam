@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM python:3.7-buster
 
 LABEL org.opencontainers.image.source https://github.com/AndreasVikke-School/cph-business-si-exam
 
@@ -8,8 +8,6 @@ ENV NEOUSER="neo4j"
 ENV NEOPASS="P@ssword!"
 
 COPY requirements.txt requirements.txt
-RUN apk add g++
-RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
 COPY . .
