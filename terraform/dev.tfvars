@@ -1,4 +1,4 @@
-api_service_image_version      = "sha256-5ef76d48f53f"
+api_service_image_version      = "sha256-fbc9e8a2c1bc"
 postgres_service_image_version = "sha256-5da3a4985f5e"
 redis_service_image_version    = "sha256-e760e8feac0b"
 kafka_service_image_version    = "sha256-1164cad5aeb3"
