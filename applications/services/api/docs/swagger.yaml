@@ -1,0 +1,28 @@
+basePath: /api/
+host: localhost:8080
+info:
+  contact: {}
+  description: API for school project
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Book & Venyl Loan Service
+  version: "1.0"
+paths:
+  /hello_world:
+    get:
+      consumes:
+      - application/json
+      description: Says Hello World
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+schemes:
+- http
+swagger: "2.0"
