@@ -7,16 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type BorrowerEntry struct {
-	BorrowerId int64 `json:"borrowerId,omitempty"`
-	EntityId   int64 `json:"entityId,omitempty"`
+type LoanEntry struct {
+	UserId   int64 `json:"userId,omitempty"`
+	EntityId int64 `json:"entityId,omitempty"`
 }
 
-func CreateBorrower(c *gin.Context) {
-	var borrowerEntry BorrowerEntry
-	err := c.BindJSON(&borrowerEntry)
+func CreateLoanEntry(c *gin.Context) {
+	var loanEntry LoanEntry
+	err := c.BindJSON(&loanEntry)
 	eh.PanicOnError(err, "Couldn't bind JSON")
-	ProduceBorrowerEntryToRabbitmq(borrowerEntry)
+	ProduceLoanEntryToRabbitmq(loanEntry)
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"queued": "success",
 	})

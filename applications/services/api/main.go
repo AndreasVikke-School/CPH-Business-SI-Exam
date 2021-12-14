@@ -25,8 +25,16 @@ func main() {
 
 	router.GET("/api/hello_world/", HelloWorld)
 	router.POST("/api/create_log/", CreateLog)
-	router.POST("/api/create_borrower/", CreateBorrower)
-	//route getUser -> metodekald som laver grpc client som kalder grpc serveren hos postgres
+	router.POST("/api/create_loan_entry/", CreateLoanEntry)
+
+	router.POST("/api/create_user/", CreateUser)
+	router.GET("/api/get_user/:id", GetUser)
+	router.GET("/api/get_users/", GetAllUsers)
+
+	router.POST("/api/create_loan/", CreateLoan)
+	router.GET("/api/get_loan/:id", GetLoan)
+	router.GET("/api/get_loans/", GetAllLoans)
+	// router.GET("/api/get_loans_by_user/:id", GetAllLoansByUser)
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])
