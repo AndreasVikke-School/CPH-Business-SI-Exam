@@ -90,3 +90,21 @@ module "redis_service" {
     }
   }
 }
+
+module "rabbitmq_service" {
+  source = "./modules/service"
+
+  name_prefix            = "rabbitmq-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "rabbitmq_service"
+  image_version          = var.rabbitmq_service_image_version
+  container_port         = 50051
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 50051,
+      target_port = 50051
+    }
+  }
+}
