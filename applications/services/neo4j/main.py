@@ -1,2 +1,3 @@
+import neo4j_server
 if __name__ == "__main__":
-    print("hello world")
+    neo4j_server()
