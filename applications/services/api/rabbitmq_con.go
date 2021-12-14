@@ -18,12 +18,12 @@ func ProduceLoanEntryToRabbitmq(loanEntry LoanEntry) {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"BorrowerQueue", // name
-		false,           // durable
-		false,           // delete when unused
-		false,           // exclusive
-		false,           // no-wait
-		nil,             // arguments
+		"LoanQueue", // name
+		false,       // durable
+		false,       // delete when unused
+		false,       // exclusive
+		false,       // no-wait
+		nil,         // arguments
 	)
 	eh.PanicOnError(err, "Failed to declare a queue")
 

@@ -1,9 +1,9 @@
 {
     "postgres": {
-        "service": "postgres-service.services:50051"
+        "service": "postgres-service.services-si:50051"
     },
     "redis": {
-        "service": "redis-service.services:50051"
+        "service": "redis-service.services-si:50051"
     },
     "kafka": {
         "service": "kafka.kafka-si:9092"
