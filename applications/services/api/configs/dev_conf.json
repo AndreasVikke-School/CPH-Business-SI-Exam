@@ -12,5 +12,8 @@
         "service": "localhost:5672",
         "username": "rabbitmq",
         "password": "P@ssword!"
+    },
+    "neo4j": {
+        "service": "localhost:50051"
     }
 }

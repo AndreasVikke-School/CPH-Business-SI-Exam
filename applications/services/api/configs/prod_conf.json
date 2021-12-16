@@ -12,5 +12,8 @@
         "service": "rabbitmq.rabbitmq-si:5672",
         "username": "rabbitmq",
         "password": "P@ssword!"
+    },
+    "neo4j": {
+        "service": "neo4j-service.services-si:50051"
     }
 }

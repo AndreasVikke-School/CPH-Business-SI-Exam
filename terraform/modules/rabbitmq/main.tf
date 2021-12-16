@@ -10,7 +10,7 @@ resource "helm_release" "rabbitmq" {
 
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "rabbitmq"
-  timeout    = 900
+  timeout    = 1200
 
   set {
     name  = "service.type"
