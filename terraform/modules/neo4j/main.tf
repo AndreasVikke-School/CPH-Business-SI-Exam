@@ -9,7 +9,7 @@ resource "helm_release" "neo4j" {
   namespace  = kubernetes_namespace.neo4j.metadata.0.name
 
   chart      = "${path.module}/chart/"
-  timeout    = 900
+  timeout    = 1200
 
   set {
     name  = "neo4jPassword"

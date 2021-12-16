@@ -9,17 +9,17 @@ import "google/protobuf/empty.proto";
 
 service VinylService {
   rpc GetVinyl (google.protobuf.Int64Value) returns (Vinyl);
-  rpc GetVinylByTitle (Title) returns (Vinyl);
-  rpc GetVinylSimpleByTitle (Title) returns (VinylSimple);
-  rpc GetVinylsBySearch (Title) returns (VinylList);
+  rpc GetVinylByTitle (VinylTitle) returns (Vinyl);
+  rpc GetVinylSimpleByTitle (VinylTitle) returns (VinylSimple);
+  rpc GetVinylsBySearch (VinylTitle) returns (VinylList);
   rpc GetAllVinyls (google.protobuf.Empty) returns (VinylList);
   // Parameters should be changed from title to isbn
-  rpc GetVinylRecsArtist (Title) returns (VinylSimpleList);
-  rpc GetVinylRecsYear (Title) returns (VinylSimpleList);
+  rpc GetVinylRecsArtist (VinylTitle) returns (VinylSimpleList);
+  rpc GetVinylRecsYear (VinylTitle) returns (VinylSimpleList);
   // rpc GetVinylRecsgenre (Vinyl) returns (VinylList);
 }
 
-message Title {
+message VinylTitle {
     string title = 1;
 }
 
