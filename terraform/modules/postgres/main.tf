@@ -16,8 +16,12 @@ resource "helm_release" "postgres" {
     name  = "postgresql.password"
     value = "P@ssword!"
   }
-   set {
+  set {
     name  = "postgresql.repmgrPassword"
+    value = "P@ssword!"
+  }
+  set {
+    name  = "pgpool.adminPassword"
     value = "P@ssword!"
   }
   set {
