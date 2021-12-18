@@ -8,7 +8,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-func ProduceBorrowerEntryToRabbitmq(borrowerEntry BorrowerEntry) {
+func ProduceLoanEntryToRabbitmq(loanEntry LoanEntry) {
 	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s/", configuration.Rabbitmq.Username, configuration.Rabbitmq.Password, configuration.Rabbitmq.Service))
 	eh.PanicOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -18,16 +18,16 @@ func ProduceBorrowerEntryToRabbitmq(borrowerEntry BorrowerEntry) {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"BorrowerQueue", // name
-		false,           // durable
-		false,           // delete when unused
-		false,           // exclusive
-		false,           // no-wait
-		nil,             // arguments
+		"LoanQueue", // name
+		false,       // durable
+		false,       // delete when unused
+		false,       // exclusive
+		false,       // no-wait
+		nil,         // arguments
 	)
 	eh.PanicOnError(err, "Failed to declare a queue")
 
-	body, err := json.Marshal(borrowerEntry)
+	body, err := json.Marshal(loanEntry)
 	eh.PanicOnError(err, "Can't convert to JSON")
 
 	err = ch.Publish(

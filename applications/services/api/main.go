@@ -47,9 +47,46 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/api/hello_world/", HelloWorld)
+	// Create Log Entry
+	// @Schemes
+	// @Description Says Creates a log entry
+	// @Accept json
+	// @Produce json
+	// @Success 200 {object} map[string]interface{}
+	// @Router /api/create_log_entry/ [post]
+	router.POST("/api/create_log_entry/", CreateLogEntry)
+	router.POST("/api/create_loan_entry/", CreateLoanEntry)
+
+	router.POST("/api/create_user/", CreateUser)
+	router.GET("/api/get_user/:id", GetUser)
+	router.GET("/api/get_users/", GetAllUsers)
+
+	router.POST("/api/create_loan/", CreateLoan)
+	router.GET("/api/get_loan/:id", GetLoan)
+	router.GET("/api/get_loans/", GetAllLoans)
+	router.GET("/api/get_loans_by_user/:id", GetAllLoansByUser)
+
 	router.POST("/api/create_log/", CreateLog)
-	router.POST("/api/create_borrower/", CreateBorrower)
-	//route getUser -> metodekald som laver grpc client som kalder grpc serveren hos postgres
+	router.GET("/api/get_log_by_user/:userId/:logId", GetLogByUser)
+	router.GET("/api/get_logs_by_user/:id", GetAllLogsByUser)
+
+	router.GET("/api/get_book/:id", GetBook)
+	router.GET("/api/get_book_by_title/:title", GetBookByTitle)
+	router.GET("/api/get_book_simple_by_title/:title", GetBookSimpleByTitle)
+	router.GET("/api/get_book_by_search/:title", GetBooksBySearch)
+	router.GET("/api/get_books/", GetAllBooks)
+	router.GET("/api/get_book_recs_author/:title", GetBookRecsAuthor)
+	// skal dette ikke være year fremfor title?
+	router.GET("/api/get_book_recs_year/:title", GetBookRecsYear)
+
+	router.GET("/api/get_vinyl/:id", GetVinyl)
+	router.GET("/api/get_vinyl_by_title/:title", GetVinylByTitle)
+	router.GET("/api/get_vinyl_simple_by_title/:title", GetVinylSimpleByTitle)
+	router.GET("/api/get_vinyl_by_search/:title", GetVinylsBySearch)
+	router.GET("/api/get_vinyls/", GetAllVinyls)
+	router.GET("/api/get_vinyl_recs_author/:title", GetVinylRecsArtist)
+	// skal dette ikke være year fremfor title?
+	router.GET("/api/get_vinyl_recs_year/:title", GetVinylRecsYear)
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])

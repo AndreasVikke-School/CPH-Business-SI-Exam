@@ -1,30 +1,41 @@
+import json
 import pika
-import psycopg2
+import grpc
+import loan_pb2
+import loan_pb2_grpc
 
 def main():
-    rabbitmqConnection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    credentials = pika.PlainCredentials("rabbitmq", "P@ssword!")
+    parameters = pika.ConnectionParameters('localhost', 5672, '/', credentials)
+    rabbitmqConnection = pika.BlockingConnection(parameters)
     channel = rabbitmqConnection.channel()
 
-    postgresconnection = psycopg2.connect(
-    host="localhost",
-    database="suppliers",
-    user="postgres",
-    password="P@ssword!")
 
-    cursor = postgresconnection.cursor()
-
-    channel.queue_declare(queue='BorrowerQueue')
-
+    channel.queue_declare(queue='LoanQueue')
+                        
+    chan = grpc.insecure_channel('localhost:50051')
+    stub = loan_pb2_grpc.LoanServiceStub(chan)
     def callback(ch, method, properties, body):
-        print(" [x] Received %r" % body)
-        sql = """INSERT INTO loan(loaner_id, entity_id)
-                VALUES(%s, %s)"""
-        cursor.execute(sql, (body[0], body[1]))
-
-
-    channel.basic_consume(queue='hello',
+        print(" [x] Received %r" % json.loads(body))
+        data = json.loads(body)
+        loan = loan_pb2.Loan(
+            userId = data['userId'],
+            entityId = data['entityId'],
+            status = 0
+        )
+        try:
+            response = stub.CreateLoan(loan)
+            print("Created Loan for user with id: {0} on entity with id: {1}".format(response.userId, response.entityId))
+        except:
+            print("User not found")
+    
+    channel.basic_consume(queue='LoanQueue',
                         auto_ack=True,
                         on_message_callback=callback)
+    
+    channel.start_consuming()
+    chan.close()
+
 
 if __name__ == '__main__':
     main()

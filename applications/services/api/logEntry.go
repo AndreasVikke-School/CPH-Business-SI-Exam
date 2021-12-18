@@ -14,7 +14,14 @@ type LogEntry struct {
 	UnixTime int64 `json:"unix,omitempty"`
 }
 
-func CreateLog(c *gin.Context) {
+// Create Log Entry
+// @Schemes
+// @Description Says Creates a log entry
+// @Accept json
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router /api/create_log_entry/ [post]
+func CreateLogEntry(c *gin.Context) {
 	var logEntry LogEntry
 	err := c.BindJSON(&logEntry)
 	eh.PanicOnError(err, "Couldn't bind JSON")

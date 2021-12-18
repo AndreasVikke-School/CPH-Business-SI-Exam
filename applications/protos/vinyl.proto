@@ -1,1 +1,49 @@
 syntax = "proto3";
+
+option csharp_namespace = "Protos";
+option go_package = "/rpc";
+
+package rpc;
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service VinylService {
+  rpc GetVinyl (google.protobuf.Int64Value) returns (Vinyl);
+  rpc GetVinylByTitle (VinylTitle) returns (Vinyl);
+  rpc GetVinylSimpleByTitle (VinylTitle) returns (VinylSimple);
+  rpc GetVinylsBySearch (VinylTitle) returns (VinylList);
+  rpc GetAllVinyls (google.protobuf.Empty) returns (VinylList);
+  // Parameters should be changed from title to isbn
+  rpc GetVinylRecsArtist (VinylTitle) returns (VinylSimpleList);
+  rpc GetVinylRecsYear (VinylTitle) returns (VinylSimpleList);
+  // rpc GetVinylRecsgenre (Vinyl) returns (VinylList);
+}
+
+message VinylTitle {
+    string title = 1;
+}
+
+message Vinyl {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  string artist = 4;
+  int64 amount = 5;
+  int64 year = 6;
+}
+
+message VinylSimple {
+  int64 id = 1;
+  string name = 2;
+  string artist = 3;
+  int64 year = 4;
+}
+
+message VinylList {
+  repeated Vinyl vinyls = 1;
+}
+
+message VinylSimpleList {
+  repeated VinylSimple vinyls = 1;
+}
+

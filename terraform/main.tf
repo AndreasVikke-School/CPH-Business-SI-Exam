@@ -117,17 +117,35 @@ module "kafka_service" {
 module "rabbitmq_service" {
   source = "./modules/service"
 
-  name_prefix            = "kafka-"
+  name_prefix            = "rabbitmq-"
   namespace              = kubernetes_namespace.services.metadata.0.name
-  image_name             = "kafka_service"
-  image_version          = var.kafka_service_image_version
-  container_port         = 5000
+  image_name             = "rabbitmq_service"
+  image_version          = var.rabbitmq_service_image_version
+  container_port         = 50001
   container_replications = 2
   service_type           = "ClusterIP"
   service_ports = {
     server = {
-      port        = 5000,
-      target_port = 5000
+      port        = 50001,
+      target_port = 50001
+    }
+  }
+}
+
+module "neo4j_service" {
+  source = "./modules/service"
+
+  name_prefix            = "neo4j-"
+  namespace              = kubernetes_namespace.services.metadata.0.name
+  image_name             = "neo4j_service"
+  image_version          = var.neo4j_service_image_version
+  container_port         = 50051
+  container_replications = 2
+  service_type           = "ClusterIP"
+  service_ports = {
+    server = {
+      port        = 50051,
+      target_port = 50051
     }
   }
 }
