@@ -31,6 +31,15 @@ resource "kubernetes_deployment" "rabbitmq" {
           port {
             container_port = 5672
           }
+
+          env {
+            name  = "RABBITMQ_DEFAULT_USER"
+            value = "rabbitmq"
+          }
+          env {
+            name  = "RABBITMQ_DEFAULT_PASS"
+            value = "P@ssword!"
+          }
         }
       }
     }

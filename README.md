@@ -38,4 +38,4 @@ TODO: Insert Assignment PDF
 TODO: Write this
 
 ## Project Achitecture
-![image](assets/achitecture.png)
+![image](assets/2.0.png)

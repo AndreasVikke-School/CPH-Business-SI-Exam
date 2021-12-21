@@ -1,6 +1,6 @@
 {
     "postgres": {
-        "broker": "postgres-postgresql-ha-pgpool.postgres-si",
+        "broker": "postgres.postgres-si",
         "port": "5432",
         "user": "postgres",
         "password": "P@ssword!"

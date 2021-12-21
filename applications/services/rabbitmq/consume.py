@@ -6,8 +6,8 @@ import loan_pb2
 import loan_pb2_grpc
 
 def main():
-    credentials = pika.PlainCredentials(os.getenv('RABBITIP', "rabbitmq"), os.getenv('RABBITUSER', "P@ssword!"))
-    parameters = pika.ConnectionParameters(os.getenv('RABBITPASS', "localhost"), 5672, '/', credentials)
+    credentials = pika.PlainCredentials(os.getenv('RABBITUSER', "rabbitmq"), os.getenv('RABBITPASS', "P@ssword!"))
+    parameters = pika.ConnectionParameters(os.getenv('RABBITIP', "localhost"), 5672, '/', credentials)
     rabbitmqConnection = pika.BlockingConnection(parameters)
     channel = rabbitmqConnection.channel()
 
@@ -40,8 +40,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-

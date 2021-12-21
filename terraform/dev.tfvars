@@ -1,9 +1,9 @@
-api_service_image_version      = "sha256-7bf9b1d3984e"
-postgres_service_image_version = "sha256-5da3a4985f5e"
+api_service_image_version      = "sha256-fbc9e8a2c1bc"
+postgres_service_image_version = "sha256-5bc7fef84c4f"
 redis_service_image_version    = "sha256-e760e8feac0b"
 kafka_service_image_version    = "sha256-1164cad5aeb3"
-rabbitmq_service_image_version = "sha256-de3ca0bee0cf"
-
+rabbitmq_service_image_version = "sha256-87d93d716bbd"
+neo4j_service_image_version    = "sha256-fa552ad4cb58"
 
 neo4j = {
     core_replicas    = 3,
@@ -16,7 +16,7 @@ rabbitmq = {
     replicas = 1
 }
 redis = {
-    replicas: 6
+    replicas = 6
 }
 kafka = {
     replicas = 1

@@ -112,6 +112,10 @@ module "kafka_service" {
       target_port = 5000
     }
   }
+
+  depends_on = [
+    module.kafka_module
+  ]
 }
 
 module "rabbitmq_service" {
