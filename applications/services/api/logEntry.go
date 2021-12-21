@@ -16,10 +16,10 @@ type LogEntry struct {
 
 // Create Log Entry
 // @Schemes
-// @Description Says Creates a log entry
+// @Description Creates a log entry
 // @Accept json
 // @Produce json
-// @Success 200 {object} map[string]interface{}
+// @Success 200
 // @Router /api/create_log_entry/ [post]
 func CreateLogEntry(c *gin.Context) {
 	var logEntry LogEntry

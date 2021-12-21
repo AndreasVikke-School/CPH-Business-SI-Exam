@@ -22,6 +22,15 @@ type Loan struct {
 	Status   pb.Status `json:"status,omitempty"`
 }
 
+// Get Loan
+// @Schemes
+// @Description Gets a loan by id
+// @Tags Loan
+// @Accept json
+// @Produce json
+// @Success 200 {object} Loan
+// @Failure 404
+// @Router /api/get_loan/:id [get]
 func GetLoan(c *gin.Context) {
 	loanId := c.Param("id")
 	id, err := strconv.ParseInt(loanId, 10, 64)
@@ -43,6 +52,15 @@ func GetLoan(c *gin.Context) {
 	}
 }
 
+// Get All Loans
+// @Schemes
+// @Description Gets a list of all loans
+// @Tags Loan
+// @Accept json
+// @Produce json
+// @Success 200 {object} []Loan
+// @Failure 404
+// @Router /api/get_loans/ [get]
 func GetAllLoans(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -65,6 +83,15 @@ func GetAllLoans(c *gin.Context) {
 	}
 }
 
+// Get All Loans By User
+// @Schemes
+// @Description Gets a list of all loans by a user
+// @Tags Loan
+// @Accept json
+// @Produce json
+// @Success 200 {object} []Loan
+// @Failure 404
+// @Router /api/get_loans_by_user/:id [get]
 func GetAllLoansByUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -91,6 +118,14 @@ func GetAllLoansByUser(c *gin.Context) {
 	}
 }
 
+// Create loan
+// @Schemes
+// @Description Gets a loan
+// @Tags Loan
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /api/loan/create_loan/ [post]
 func CreateLoan(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")

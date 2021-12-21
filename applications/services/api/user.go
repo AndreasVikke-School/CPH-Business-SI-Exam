@@ -22,6 +22,15 @@ type User struct {
 	Password string `json:"password,omitempty"`
 }
 
+// Get User
+// @Schemes
+// @Description Gets a user by id
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} User
+// @Failure 404
+// @Router /api/get_user/:id [get]
 func GetUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -43,6 +52,15 @@ func GetUser(c *gin.Context) {
 	}
 }
 
+// Get All Users
+// @Schemes
+// @Description Gets a list of all users
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} []User
+// @Failure 404
+// @Router /api/get_users/ [get]
 func GetAllUsers(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -65,6 +83,14 @@ func GetAllUsers(c *gin.Context) {
 	}
 }
 
+// Create User
+// @Schemes
+// @Description Creates a user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /api/create_user/ [post]
 func CreateUser(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")

@@ -12,6 +12,13 @@ type LoanEntry struct {
 	EntityId int64 `json:"entityId,omitempty"`
 }
 
+// Create Loan Entry
+// @Schemes
+// @Description Creates a loan entry
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /api/create_loan_entry/ [post]
 func CreateLoanEntry(c *gin.Context) {
 	var loanEntry LoanEntry
 	err := c.BindJSON(&loanEntry)

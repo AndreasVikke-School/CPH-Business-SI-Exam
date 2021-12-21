@@ -1,4 +1,95 @@
 basePath: /api/
+definitions:
+  main.Book:
+    properties:
+      amount:
+        type: integer
+      author:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
+  main.BookSimple:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
+  main.Loan:
+    properties:
+      entityId:
+        type: integer
+      id:
+        type: integer
+      status:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  main.Log:
+    properties:
+      entityId:
+        type: integer
+      id:
+        type: integer
+      unix:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  main.Response:
+    properties:
+      success:
+        type: string
+    type: object
+  main.User:
+    properties:
+      age:
+        type: integer
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  main.Vinyl:
+    properties:
+      amount:
+        type: integer
+      artist:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
+  main.VinylSimple:
+    properties:
+      artist:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -10,6 +101,424 @@ info:
   title: Book & Venyl Loan Service
   version: "1.0"
 paths:
+  /api/create_loan_entry/:
+    post:
+      consumes:
+      - application/json
+      description: Creates a loan entry
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+  /api/create_log/:
+    post:
+      consumes:
+      - application/json
+      description: Creates a log
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      tags:
+      - Log
+  /api/create_log_entry/:
+    post:
+      consumes:
+      - application/json
+      description: Creates a log entry
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Response'
+  /api/create_user/:
+    post:
+      consumes:
+      - application/json
+      description: Creates a user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      tags:
+      - User
+  /api/get_book/:id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a book by id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Book'
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_book_by_search/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all searched books by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Book'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_book_by_title/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a book by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Book'
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_book_recs_author/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a recommended list of all books from author by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.BookSimple'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_book_recs_year/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a recommended list of all books from year by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.BookSimple'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_book_simple_by_title/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a simplified list of books by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.BookSimple'
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_books/:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Book'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/get_loan/:id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a loan by id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Loan'
+        "404":
+          description: ""
+      tags:
+      - Loan
+  /api/get_loans/:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all loans
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Loan'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Loan
+  /api/get_loans_by_user/:id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all loans by a user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Loan'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Loan
+  /api/get_log_by_user/:userId/:logId:
+    get:
+      consumes:
+      - application/json
+      description: Gets a log by user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Log'
+        "404":
+          description: ""
+      tags:
+      - Log
+  /api/get_logs_by_user/:id:
+    get:
+      consumes:
+      - application/json
+      description: Says a list of all logs by user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Log'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Log
+  /api/get_user/:id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a user by id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.User'
+        "404":
+          description: ""
+      tags:
+      - User
+  /api/get_users/:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.User'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - User
+  /api/get_vinyl/:id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a vinyl by id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Vinyl'
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyl_by_search/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of vinyls from search by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Vinyl'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyl_by_title/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a vinyl by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Vinyl'
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyl_recs_author/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a recommended list of all vinyls from artist by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.VinylSimple'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyl_recs_year/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a recommended list of all vinyls from year by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.VinylSimple'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyl_simple_by_title/:title:
+    get:
+      consumes:
+      - application/json
+      description: Gets a simplified list of vinyls by title
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.VinylSimple'
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/get_vinyls/:
+    get:
+      consumes:
+      - application/json
+      description: Gets a list of all vinyls
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Vinyl'
+            type: array
+        "404":
+          description: ""
+      tags:
+      - Vinyl
+  /api/loan/create_loan/:
+    post:
+      consumes:
+      - application/json
+      description: Gets a loan
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      tags:
+      - Loan
   /hello_world:
     get:
       consumes:

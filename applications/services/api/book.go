@@ -30,6 +30,15 @@ type BookSimple struct {
 	Year   int64  `json:"year,omitempty"`
 }
 
+// Get Book
+// @Schemes
+// @Description Gets a book by id
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} Book
+// @Failure 404
+// @Router /api/get_book/:id [get]
 func GetBook(c *gin.Context) {
 	bookId := c.Param("id")
 	id, err := strconv.ParseInt(bookId, 10, 64)
@@ -51,6 +60,15 @@ func GetBook(c *gin.Context) {
 	}
 }
 
+// Get Book By Title
+// @Schemes
+// @Description Gets a book by title
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} Book
+// @Failure 404
+// @Router /api/get_book_by_title/:title [get]
 func GetBookByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -70,6 +88,15 @@ func GetBookByTitle(c *gin.Context) {
 	}
 }
 
+// Get Book Simplified By Title
+// @Schemes
+// @Description Gets a simplified list of books by title
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} BookSimple
+// @Failure 404
+// @Router /api/get_book_simple_by_title/:title [get]
 func GetBookSimpleByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -89,6 +116,15 @@ func GetBookSimpleByTitle(c *gin.Context) {
 	}
 }
 
+// Get Books By Search
+// @Schemes
+// @Description Gets a list of all searched books by title
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} []Book
+// @Failure 404
+// @Router /api/get_book_by_search/:title [get]
 func GetBooksBySearch(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -113,6 +149,15 @@ func GetBooksBySearch(c *gin.Context) {
 	}
 }
 
+// Get All Books
+// @Schemes
+// @Description Gets a list of all books
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} []Book
+// @Failure 404
+// @Router /api/get_books/ [get]
 func GetAllBooks(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -135,6 +180,15 @@ func GetAllBooks(c *gin.Context) {
 	}
 }
 
+// Get Books Recommended By Author
+// @Schemes
+// @Description Gets a recommended list of all books from author by title
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} []BookSimple
+// @Failure 404
+// @Router /api/get_book_recs_author/:title [get]
 func GetBookRecsAuthor(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -159,6 +213,15 @@ func GetBookRecsAuthor(c *gin.Context) {
 	}
 }
 
+// Get Books Recommended By Year
+// @Schemes
+// @Description Gets a recommended list of all books from year by title
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} []BookSimple
+// @Failure 404
+// @Router /api/get_book_recs_year/:title [get]
 func GetBookRecsYear(c *gin.Context) {
 	bookTitle := c.Param("title")
 

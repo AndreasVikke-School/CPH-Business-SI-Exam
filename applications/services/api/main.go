@@ -47,13 +47,6 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/api/hello_world/", HelloWorld)
-	// Create Log Entry
-	// @Schemes
-	// @Description Says Creates a log entry
-	// @Accept json
-	// @Produce json
-	// @Success 200 {object} map[string]interface{}
-	// @Router /api/create_log_entry/ [post]
 	router.POST("/api/create_log_entry/", CreateLogEntry)
 	router.POST("/api/create_loan_entry/", CreateLoanEntry)
 
