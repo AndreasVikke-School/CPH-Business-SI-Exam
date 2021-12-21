@@ -63,10 +63,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Response"
-                        }
+                        "description": ""
                     }
                 }
             }
@@ -763,14 +760,6 @@
                 },
                 "userId": {
                     "type": "integer"
-                }
-            }
-        },
-        "main.Response": {
-            "type": "object",
-            "properties": {
-                "success": {
-                    "type": "string"
                 }
             }
         },

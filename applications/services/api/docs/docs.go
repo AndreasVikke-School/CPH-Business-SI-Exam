@@ -74,10 +74,7 @@ var doc = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Response"
-                        }
+                        "description": ""
                     }
                 }
             }
@@ -774,14 +771,6 @@ var doc = `{
                 },
                 "userId": {
                     "type": "integer"
-                }
-            }
-        },
-        "main.Response": {
-            "type": "object",
-            "properties": {
-                "success": {
-                    "type": "string"
                 }
             }
         },

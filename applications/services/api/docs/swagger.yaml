@@ -48,11 +48,6 @@ definitions:
       userId:
         type: integer
     type: object
-  main.Response:
-    properties:
-      success:
-        type: string
-    type: object
   main.User:
     properties:
       age:
@@ -132,9 +127,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.Response'
+          description: ""
   /api/create_user/:
     post:
       consumes:
