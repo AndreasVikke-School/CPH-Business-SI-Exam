@@ -4,83 +4,87 @@ resource "kubernetes_namespace" "postgres" {
   }
 }
 
-resource "helm_release" "postgres" {
-  name       = "postgres"
-  namespace  = kubernetes_namespace.postgres.metadata.0.name
+# resource "helm_release" "postgres" {
+#   name       = "postgres"
+#   namespace  = kubernetes_namespace.postgres.metadata.0.name
 
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "postgresql-ha"
-  timeout    = 900
+#   repository = "https://charts.bitnami.com/bitnami"
+#   chart      = "postgresql-ha"
+#   timeout    = 900
 
-  set {
-    name  = "postgresql.password"
-    value = "P@ssword!"
+#   set {
+#     name  = "postgresql.password"
+#     value = "P@ssword!"
+#   }
+#   set {
+#     name  = "postgresql.repmgrPassword"
+#     value = "P@ssword!"
+#   }
+#   set {
+#     name  = "pgpool.adminPassword"
+#     value = "P@ssword!"
+#   }
+#   set {
+#     name  = "postgresql.replicaCount"
+#     value = var.postgres.replicas
+#   }
+# }
+
+# ==== POSTGRES SERVICE ====
+resource "kubernetes_deployment" "postgres" {
+  metadata {
+    name      = "postgres"
+    namespace = kubernetes_namespace.postgres.metadata.0.name
   }
-   set {
-    name  = "postgresql.repmgrPassword"
-    value = "P@ssword!"
-  }
-  set {
-    name  = "postgresql.replicaCount"
-    value = var.postgres.replicas
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "postgres"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "postgres"
+        }
+      }
+      spec {
+        container {
+          image = "postgres:10.5"
+          name  = "postgres"
+          port {
+            container_port = 5432
+          }
+          env {
+            name  = "POSTGRES_USER"
+            value = var.postgress_username
+          }
+          env {
+            name  = "POSTGRES_PASSWORD"
+            value = var.postgress_password
+          }
+        }
+      }
+    }
   }
 }
 
-# ==== POSTGRES SERVICE ====
-# resource "kubernetes_deployment" "postgres" {
-#   metadata {
-#     name      = "postgres"
-#     namespace = kubernetes_namespace.postgres.metadata.0.name
-#   }
-#   spec {
-#     replicas = 1
-#     selector {
-#       match_labels = {
-#         app = "postgres"
-#       }
-#     }
-#     template {
-#       metadata {
-#         labels = {
-#           app = "postgres"
-#         }
-#       }
-#       spec {
-#         container {
-#           image = "postgres:10.5"
-#           name  = "postgres"
-#           port {
-#             container_port = 5432
-#           }
-#           env {
-#             name  = "POSTGRES_USER"
-#             value = var.postgress_username
-#           }
-#           env {
-#             name  = "POSTGRES_PASSWORD"
-#             value = var.postgress_password
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
-
-# resource "kubernetes_service" "postgres" {
-#   metadata {
-#     name      = "postgres"
-#     namespace = kubernetes_namespace.postgres.metadata.0.name
-#   }
-#   spec {
-#     selector = {
-#       app = "postgres"
-#     }
-#     type = "ClusterIP"
-#     port {
-#       port = 5432
-#     }
-#   }
-# }
+resource "kubernetes_service" "postgres" {
+  metadata {
+    name      = "postgres"
+    namespace = kubernetes_namespace.postgres.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = "postgres"
+    }
+    type = "ClusterIP"
+    port {
+      port = 5432
+    }
+  }
+}
 # ==== POSTGRES SERVICE END ====
 
 # ==== PGADMIN SERVICE ====
