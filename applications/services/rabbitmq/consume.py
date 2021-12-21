@@ -1,19 +1,20 @@
 import json
+import os
 import pika
 import grpc
 import loan_pb2
 import loan_pb2_grpc
 
 def main():
-    credentials = pika.PlainCredentials("rabbitmq", "P@ssword!")
-    parameters = pika.ConnectionParameters('localhost', 5672, '/', credentials)
+    credentials = pika.PlainCredentials(os.getenv('RABBITIP', "rabbitmq"), os.getenv('RABBITUSER', "P@ssword!"))
+    parameters = pika.ConnectionParameters(os.getenv('RABBITPASS', "localhost"), 5672, '/', credentials)
     rabbitmqConnection = pika.BlockingConnection(parameters)
     channel = rabbitmqConnection.channel()
 
 
     channel.queue_declare(queue='LoanQueue')
                         
-    chan = grpc.insecure_channel('localhost:50051')
+    chan = grpc.insecure_channel('{0}:50051'.format(os.getenv('REDISIP', "localhost")))
     stub = loan_pb2_grpc.LoanServiceStub(chan)
     def callback(ch, method, properties, body):
         print(" [x] Received %r" % json.loads(body))
