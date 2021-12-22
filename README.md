@@ -117,6 +117,56 @@ readiness for scaling and load-balancing.
 
 5. Advertise the final product in a short video clip.
 
+### Requirements
+As it is a project with particular learning objectives, it refers to the content you have learned and the
+assignments you have developed during the semester. Therefore, you must consider the following
+mandatory requirements and limitations of your exam project solution:
+
+#### **1. System Components**
+
+Subject of integration are several disparate applications, application components, and data
+sources of three types:
+1. a monolithic or legacy object-oriented application – for ex. file or large DB based
+system, Client-Server or MVC architecture, any black-box or hidden application
+2. SOAP/REST web services or SOA implementation – either locally built or exposed as
+free resources in Internet
+3. microservices architecture application or modules of application, including selected
+discovery, orchestration, or choreography methods and technologies
+
+#### **2. Business Context**
+The integration architecture design reflects on the business context:
+1. applies domain-driven design approach
+2. includes BPMN models and rules
+3. follows enterprise integration patterns, EIP
+4. enables sharing, integration and transformation of data between system components,
+data structures and file formats
+
+#### **3. Integration Technologies**
+The development implements variety of integration and communication techniques (the
+technologies in the parentheses are examples)
+1. both RESTful and gRPC APIs
+2. . MOM – either brokerless (Apache Camel) or broker-based (ActiveMQ, RabbitMQ)
+3. event streaming – (Apache Kafka)
+4. business process automation – (Camunda)
+5. microservices composition, discovery, and management – (Docker, Docker Compose,
+Eureka, Netflix tools, Kubernetes
+
+#### **4. Development Environments and QA**
+The product also illustrates use of:
+1. decoupling, configuration, choreography and orchestration of components
+2. synchronous and asynchronous interaction styles
+3. logging and monitoring the system or its components 
+4. producing error messages in human-readable format
+5. implementing variety of programming languages or development platforms
+You can consider the Twelve-Factor App recommendations.
+
+#### **5. Client Applications**
+The product integration channels must be tested for both success and failure 
+1. there is no requirement for developing a GUI-based client application 
+2. publicly available means, such as Postman, curl, console CLI and web browsers, which
+provide a simple interface for illustrating the functionality of the integrated system can
+be used instead
+
 ## Introduction
 We've decided to work on the book and vinyl subscription services provider. The entire project is run on a minikube cluster through terraform. The "legacy" system that this company has is an excel sheet that was previously used as their database collection of rentals and their catolog of books and vinyls. Before diving into the process of development, take a look at [Project Architecture](#project-achitecture), so that you have an understanding of how the system flows and how it's implemented. Thereafter we'll go through our [Process](#process), and discuss how we ended up with our chosen design, up to the end result. 
 
@@ -137,3 +187,6 @@ After the team had decided which of the projects to work on, we started with ske
 
 ### Development and setup
 As our first architecture drawing illustrates, we wanted to deploy our system to a kubernetes cluster using minikube and terraform. 
+
+## Further Development
+Any further development of the project after hand in date will be noted here. 
