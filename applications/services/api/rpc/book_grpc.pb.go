@@ -8,7 +8,6 @@ import (
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,7 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BookServiceClient interface {
-	GetBook(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*Book, error)
+	// Returns msg with string
+	WriteCsvToDb(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*BookTitle, error)
 	GetBookByTitle(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*Book, error)
 	GetBookSimpleByTitle(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookSimple, error)
 	GetBooksBySearch(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookList, error)
@@ -28,6 +28,8 @@ type BookServiceClient interface {
 	// Parameters should be changed from title to isbn
 	GetBookRecsAuthor(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookSimpleList, error)
 	GetBookRecsYear(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookSimpleList, error)
+	CheckoutBook(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookTitle, error)
+	ReturnBook(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookTitle, error)
 }
 
 type bookServiceClient struct {
@@ -38,9 +40,9 @@ func NewBookServiceClient(cc grpc.ClientConnInterface) BookServiceClient {
 	return &bookServiceClient{cc}
 }
 
-func (c *bookServiceClient) GetBook(ctx context.Context, in *wrapperspb.Int64Value, opts ...grpc.CallOption) (*Book, error) {
-	out := new(Book)
-	err := c.cc.Invoke(ctx, "/rpc.BookService/GetBook", in, out, opts...)
+func (c *bookServiceClient) WriteCsvToDb(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*BookTitle, error) {
+	out := new(BookTitle)
+	err := c.cc.Invoke(ctx, "/rpc.BookService/WriteCsvToDb", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,11 +103,30 @@ func (c *bookServiceClient) GetBookRecsYear(ctx context.Context, in *BookTitle, 
 	return out, nil
 }
 
+func (c *bookServiceClient) CheckoutBook(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookTitle, error) {
+	out := new(BookTitle)
+	err := c.cc.Invoke(ctx, "/rpc.BookService/CheckoutBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookServiceClient) ReturnBook(ctx context.Context, in *BookTitle, opts ...grpc.CallOption) (*BookTitle, error) {
+	out := new(BookTitle)
+	err := c.cc.Invoke(ctx, "/rpc.BookService/ReturnBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookServiceServer is the server API for BookService service.
 // All implementations must embed UnimplementedBookServiceServer
 // for forward compatibility
 type BookServiceServer interface {
-	GetBook(context.Context, *wrapperspb.Int64Value) (*Book, error)
+	// Returns msg with string
+	WriteCsvToDb(context.Context, *emptypb.Empty) (*BookTitle, error)
 	GetBookByTitle(context.Context, *BookTitle) (*Book, error)
 	GetBookSimpleByTitle(context.Context, *BookTitle) (*BookSimple, error)
 	GetBooksBySearch(context.Context, *BookTitle) (*BookList, error)
@@ -113,6 +134,8 @@ type BookServiceServer interface {
 	// Parameters should be changed from title to isbn
 	GetBookRecsAuthor(context.Context, *BookTitle) (*BookSimpleList, error)
 	GetBookRecsYear(context.Context, *BookTitle) (*BookSimpleList, error)
+	CheckoutBook(context.Context, *BookTitle) (*BookTitle, error)
+	ReturnBook(context.Context, *BookTitle) (*BookTitle, error)
 	mustEmbedUnimplementedBookServiceServer()
 }
 
@@ -120,8 +143,8 @@ type BookServiceServer interface {
 type UnimplementedBookServiceServer struct {
 }
 
-func (UnimplementedBookServiceServer) GetBook(context.Context, *wrapperspb.Int64Value) (*Book, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBook not implemented")
+func (UnimplementedBookServiceServer) WriteCsvToDb(context.Context, *emptypb.Empty) (*BookTitle, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteCsvToDb not implemented")
 }
 func (UnimplementedBookServiceServer) GetBookByTitle(context.Context, *BookTitle) (*Book, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookByTitle not implemented")
@@ -141,6 +164,12 @@ func (UnimplementedBookServiceServer) GetBookRecsAuthor(context.Context, *BookTi
 func (UnimplementedBookServiceServer) GetBookRecsYear(context.Context, *BookTitle) (*BookSimpleList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookRecsYear not implemented")
 }
+func (UnimplementedBookServiceServer) CheckoutBook(context.Context, *BookTitle) (*BookTitle, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckoutBook not implemented")
+}
+func (UnimplementedBookServiceServer) ReturnBook(context.Context, *BookTitle) (*BookTitle, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReturnBook not implemented")
+}
 func (UnimplementedBookServiceServer) mustEmbedUnimplementedBookServiceServer() {}
 
 // UnsafeBookServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -154,20 +183,20 @@ func RegisterBookServiceServer(s grpc.ServiceRegistrar, srv BookServiceServer) {
 	s.RegisterService(&BookService_ServiceDesc, srv)
 }
 
-func _BookService_GetBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(wrapperspb.Int64Value)
+func _BookService_WriteCsvToDb_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookServiceServer).GetBook(ctx, in)
+		return srv.(BookServiceServer).WriteCsvToDb(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpc.BookService/GetBook",
+		FullMethod: "/rpc.BookService/WriteCsvToDb",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookServiceServer).GetBook(ctx, req.(*wrapperspb.Int64Value))
+		return srv.(BookServiceServer).WriteCsvToDb(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -280,6 +309,42 @@ func _BookService_GetBookRecsYear_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookService_CheckoutBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BookTitle)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).CheckoutBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpc.BookService/CheckoutBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).CheckoutBook(ctx, req.(*BookTitle))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookService_ReturnBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BookTitle)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).ReturnBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpc.BookService/ReturnBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).ReturnBook(ctx, req.(*BookTitle))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookService_ServiceDesc is the grpc.ServiceDesc for BookService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -288,8 +353,8 @@ var BookService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BookServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetBook",
-			Handler:    _BookService_GetBook_Handler,
+			MethodName: "WriteCsvToDb",
+			Handler:    _BookService_WriteCsvToDb_Handler,
 		},
 		{
 			MethodName: "GetBookByTitle",
@@ -314,6 +379,14 @@ var BookService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBookRecsYear",
 			Handler:    _BookService_GetBookRecsYear_Handler,
+		},
+		{
+			MethodName: "CheckoutBook",
+			Handler:    _BookService_CheckoutBook_Handler,
+		},
+		{
+			MethodName: "ReturnBook",
+			Handler:    _BookService_ReturnBook_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
