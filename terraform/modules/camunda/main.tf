@@ -96,7 +96,7 @@ resource "kubernetes_service" "camunda" {
     }
     type = "LoadBalancer"
     port {
-      port = 8080
+      port = 8082
       target_port = 8080
     }
   }
