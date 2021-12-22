@@ -40,18 +40,20 @@ type BookTitle struct {
 // @Produce      json
 // @Success      200  {object}  BookTitle
 // @Failure      404
-// @Router       /api/write_csv_to_db/ [get]
+// @Router       /book/write-csv-to-db/ [get]
 func WriteCsvToDb(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
 	con := pb.NewBookServiceClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*100)
 	defer cancel()
 
 	bookT, err := con.WriteCsvToDb(ctx, &emptypb.Empty{})
+	eh.PanicOnError(err, "test error")
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})
@@ -63,10 +65,11 @@ func WriteCsvToDb(c *gin.Context) {
 // @Description  Gets a book by title
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  Book
 // @Failure      404
-// @Router       /api/get_book_by_title/:title [get]
+// @Router       /book/get/{title} [get]
 func GetBookByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -80,6 +83,7 @@ func GetBookByTitle(c *gin.Context) {
 
 	book, err := con.GetBookByTitle(ctx, &pb.BookTitle{Title: bookTitle})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, book)
@@ -91,10 +95,11 @@ func GetBookByTitle(c *gin.Context) {
 // @Description  Gets a simplified list of books by title
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  BookSimple
 // @Failure      404
-// @Router       /api/get_book_simple_by_title/:title [get]
+// @Router       /book/get-simple/{title} [get]
 func GetBookSimpleByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -108,6 +113,7 @@ func GetBookSimpleByTitle(c *gin.Context) {
 
 	book, err := con.GetBookSimpleByTitle(ctx, &pb.BookTitle{Title: bookTitle})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, book)
@@ -119,10 +125,11 @@ func GetBookSimpleByTitle(c *gin.Context) {
 // @Description  Gets a list of all searched books by title
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  []Book
 // @Failure      404
-// @Router       /api/get_book_by_search/:title [get]
+// @Router       /book/search/{title} [get]
 func GetBooksBySearch(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -141,6 +148,7 @@ func GetBooksBySearch(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, booklist)
@@ -155,7 +163,7 @@ func GetBooksBySearch(c *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  []Book
 // @Failure      404
-// @Router       /api/get_books/ [get]
+// @Router       /book/all/ [get]
 func GetAllBooks(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -172,6 +180,7 @@ func GetAllBooks(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, bookList)
@@ -183,10 +192,11 @@ func GetAllBooks(c *gin.Context) {
 // @Description  Gets a recommended list of all books from author by title
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  []BookSimple
 // @Failure      404
-// @Router       /api/get_book_recs_author/:title [get]
+// @Router       /book/get-recs-author/{title} [get]
 func GetBookRecsAuthor(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -205,6 +215,7 @@ func GetBookRecsAuthor(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, booklist)
@@ -216,10 +227,11 @@ func GetBookRecsAuthor(c *gin.Context) {
 // @Description  Gets a recommended list of all books from year by title
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  []BookSimple
 // @Failure      404
-// @Router       /api/get_book_recs_year/:title [get]
+// @Router       /book/get-recs-year/{title} [get]
 func GetBookRecsYear(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -238,6 +250,7 @@ func GetBookRecsYear(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, booklist)
@@ -249,10 +262,11 @@ func GetBookRecsYear(c *gin.Context) {
 // @Description  Checkouts a book
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  BookTitle
 // @Failure      404
-// @Router       /api/checkout_book/:title [get]
+// @Router       /book/checkout/{title} [get]
 func CheckoutBook(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -267,6 +281,7 @@ func CheckoutBook(c *gin.Context) {
 	bookT, err := con.CheckoutBook(ctx, &pb.BookTitle{Title: bookTitle})
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})
@@ -278,10 +293,11 @@ func CheckoutBook(c *gin.Context) {
 // @Description  Returns a book
 // @Tags         Book
 // @Accept       json
+// @Param        title  path  string  true  "Title of book"
 // @Produce      json
 // @Success      200  {object}  BookTitle
 // @Failure      404
-// @Router       /api/return_book/:title [get]
+// @Router       /book/return/{title} [get]
 func ReturnBook(c *gin.Context) {
 	bookTitle := c.Param("title")
 
@@ -296,6 +312,7 @@ func ReturnBook(c *gin.Context) {
 	bookT, err := con.ReturnBook(ctx, &pb.BookTitle{Title: bookTitle})
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})

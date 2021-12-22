@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -21,15 +20,23 @@ type Log struct {
 	Unix     int64 `json:"unix,omitempty"`
 }
 
+type LogEntry struct {
+	UserId   int64 `json:"userId,omitempty"`
+	EntityId int64 `json:"entityId,omitempty"`
+	UnixTime int64 `json:"unix,omitempty"`
+}
+
 // Get Log By User
 // @Schemes
 // @Description  Gets a log by user
 // @Tags         Log
 // @Accept       json
+// @Param        userId  path  int  true  "Id of user"
+// @Param        logId  path  int  true  "Id of log"
 // @Produce      json
 // @Success      200  {object}  Log
 // @Failure      404
-// @Router       /api/get_log_by_user/:userId/:logId [get]
+// @Router       /log/get-by-user/{userId}/{logId} [get]
 func GetLogByUser(c *gin.Context) {
 	userId := c.Param("userId")
 	uId, err := strconv.ParseInt(userId, 10, 64)
@@ -49,6 +56,7 @@ func GetLogByUser(c *gin.Context) {
 
 	log, err := con.GetLogByUser(ctx, &pb.LogRequest{Id: lId, UserId: uId})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, log)
@@ -60,10 +68,11 @@ func GetLogByUser(c *gin.Context) {
 // @Description  Says a list of all logs by user
 // @Tags         Log
 // @Accept       json
+// @Param        id  path  int  true  "Id of user"
 // @Produce      json
 // @Success      200  {object}  []Log
 // @Failure      404
-// @Router       /api/get_logs_by_user/:id [get]
+// @Router       /log/all-by-user/{id} [get]
 func GetAllLogsByUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -84,35 +93,29 @@ func GetAllLogsByUser(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, logList)
 	}
 }
 
-// Create Log
+// Create Log Entry
 // @Schemes
-// @Description  Creates a log
+// @Description  Creates a log entry
 // @Tags         Log
 // @Accept       json
-// @Param        Log  body  Log  true  "Log to create"
+// @Param        LogEntry  body  LogEntry  true  "Create log entry"
 // @Produce      json
 // @Success      200
-// @Router       /api/create_log/ [post]
-func CreateLog(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Redis.Service, grpc.WithInsecure())
-	eh.PanicOnError(err, "failed to connect to grpc")
-	defer conn.Close()
-
-	con := pb.NewLogServiceClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	defer cancel()
-
-	var lg Log
-	err = c.BindJSON(&lg)
-	eh.PanicOnError(err, "Couldn't bind json to log")
-
-	l, err := con.CreateLog(ctx, &pb.Log{Id: lg.Id, UserId: lg.UserId, EntityId: lg.EntityId, Unix: lg.Unix})
-	eh.PanicOnError(err, "failed to create loan")
-	log.Printf("Log created in redis with id: %d", l.Id)
+// @Router       /log/create/ [post]
+func CreateLogEntry(c *gin.Context) {
+	var logEntry LogEntry
+	err := c.BindJSON(&logEntry)
+	eh.PanicOnError(err, "Couldn't bind JSON")
+	logEntry.UnixTime = time.Now().UnixNano() / 1000000
+	ProduceLogEntryToKafka(logEntry)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"queued": "success",
+	})
 }

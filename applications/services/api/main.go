@@ -24,7 +24,7 @@ var (
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host      localhost:8080
-// @BasePath  /
+// @BasePath  /api
 // @schemes   http
 func main() {
 	router := gin.Default()
@@ -74,7 +74,7 @@ func main() {
 			vinyl.GET("/get-simple/:title", GetVinylSimpleByTitle)
 			vinyl.GET("/search/:title", GetVinylsBySearch)
 			vinyl.GET("/all/", GetAllVinyls)
-			vinyl.GET("/get-recs-author/:title", GetVinylRecsArtist)
+			vinyl.GET("/get-recs-artist/:title", GetVinylRecsArtist)
 			vinyl.GET("/get-recs-year/:title", GetVinylRecsYear)
 		}
 

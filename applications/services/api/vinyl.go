@@ -40,10 +40,11 @@ type HTTPError struct {
 // @Description  Gets a vinyl by id
 // @Tags         Vinyl
 // @Accept       json
+// @Param        id  path  int  true  "Id of vinyl"
 // @Produce      json
 // @Success      200  {object}  Vinyl
 // @Failure      404
-// @Router       /api/get_vinyl/:id [get]
+// @Router       /vinyl/get/{id} [get]
 func GetVinyl(c *gin.Context) {
 	vinylId := c.Param("id")
 	id, err := strconv.ParseInt(vinylId, 10, 64)
@@ -58,7 +59,9 @@ func GetVinyl(c *gin.Context) {
 	defer cancel()
 
 	vinyl, err := con.GetVinyl(ctx, &wrapperspb.Int64Value{Value: id})
+	eh.PanicOnError(err, "teste")
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinyl)
@@ -70,10 +73,11 @@ func GetVinyl(c *gin.Context) {
 // @Description  Gets a vinyl by title
 // @Tags         Vinyl
 // @Accept       json
+// @Param        title  path  string  true  "Title of vinyl"
 // @Produce      json
 // @Success      200  {object}  Vinyl
 // @Failure      404
-// @Router       /api/get_vinyl_by_title/:title [get]
+// @Router       /vinyl/get-by-title/{title} [get]
 func GetVinylByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -87,6 +91,7 @@ func GetVinylByTitle(c *gin.Context) {
 
 	vinyl, err := con.GetVinylByTitle(ctx, &pb.VinylTitle{Title: vinylTitle})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinyl)
@@ -98,10 +103,11 @@ func GetVinylByTitle(c *gin.Context) {
 // @Description  Gets a simplified list of vinyls by title
 // @Tags         Vinyl
 // @Accept       json
+// @Param        title  path  string  true  "Title of vinyl"
 // @Produce      json
 // @Success      200  {object}  VinylSimple
 // @Failure      404
-// @Router       /api/get_vinyl_simple_by_title/:title [get]
+// @Router       /vinyl/get-simple/{title} [get]
 func GetVinylSimpleByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -115,6 +121,7 @@ func GetVinylSimpleByTitle(c *gin.Context) {
 
 	vinyl, err := con.GetVinylSimpleByTitle(ctx, &pb.VinylTitle{Title: vinylTitle})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinyl)
@@ -126,10 +133,11 @@ func GetVinylSimpleByTitle(c *gin.Context) {
 // @Description  Gets a list of vinyls from search by title
 // @Tags         Vinyl
 // @Accept       json
+// @Param        title  path  string  true  "Title of vinyl"
 // @Produce      json
 // @Success      200  {object}  []Vinyl
 // @Failure      404
-// @Router       /api/get_vinyl_by_search/:title [get]
+// @Router       /vinyl/search/{title} [get]
 func GetVinylsBySearch(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -148,6 +156,7 @@ func GetVinylsBySearch(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinylList)
@@ -162,7 +171,7 @@ func GetVinylsBySearch(c *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  []Vinyl
 // @Failure      404
-// @Router       /api/get_vinyls/ [get]
+// @Router       /vinyl/all/ [get]
 func GetAllVinyls(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -179,6 +188,7 @@ func GetAllVinyls(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinylList)
@@ -190,10 +200,11 @@ func GetAllVinyls(c *gin.Context) {
 // @Description  Gets a recommended list of all vinyls from artist by title
 // @Tags         Vinyl
 // @Accept       json
+// @Param        title  path  string  true  "Title of vinyl"
 // @Produce      json
 // @Success      200  {object}  []VinylSimple
 // @Failure      404
-// @Router       /api/get_vinyl_recs_author/:title [get]
+// @Router       /vinyl/get-recs-artist/{title} [get]
 func GetVinylRecsArtist(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -212,6 +223,7 @@ func GetVinylRecsArtist(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinylList)
@@ -223,10 +235,11 @@ func GetVinylRecsArtist(c *gin.Context) {
 // @Description  Gets a recommended list of all vinyls from year by title
 // @Tags         Vinyl
 // @Accept       json
+// @Param        title  path  string  true  "Title of vinyl"
 // @Produce      json
 // @Success      200  {object}  []VinylSimple
 // @Failure      404
-// @Router       /api/get_vinyl_recs_year/:title [get]
+// @Router       /vinyl/get-recs-year/{title} [get]
 func GetVinylRecsYear(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -245,6 +258,7 @@ func GetVinylRecsYear(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, vinylList)

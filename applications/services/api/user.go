@@ -31,7 +31,7 @@ type User struct {
 // @Produce      json
 // @Success      200  {object}  User
 // @Failure      404
-// @Router       /api/get_user/{id} [get]
+// @Router       /user/get/{id} [get]
 func GetUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -47,6 +47,7 @@ func GetUser(c *gin.Context) {
 
 	user, err := con.GetUser(ctx, &wrapperspb.Int64Value{Value: id})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, user)
@@ -61,7 +62,7 @@ func GetUser(c *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  []User
 // @Failure      404
-// @Router       /api/get_users/ [get]
+// @Router       /user/all/ [get]
 func GetAllUsers(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -78,6 +79,7 @@ func GetAllUsers(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, usersList)
@@ -92,7 +94,7 @@ func GetAllUsers(c *gin.Context) {
 // @Param        User  body  User  true  "User to create"
 // @Produce      json
 // @Success      200
-// @Router       /api/create_user/ [post]
+// @Router       /user/create/ [post]
 func CreateUser(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")

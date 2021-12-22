@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -22,6 +21,11 @@ type Loan struct {
 	Status   pb.Status `json:"status,omitempty"`
 }
 
+type LoanEntry struct {
+	UserId   int64 `json:"userId,omitempty"`
+	EntityId int64 `json:"entityId,omitempty"`
+}
+
 // Get Loan
 // @Schemes
 // @Description  Gets a loan by id
@@ -31,7 +35,7 @@ type Loan struct {
 // @Produce      json
 // @Success      200  {object}  Loan
 // @Failure      404
-// @Router       /api/get_loan/{id} [get]
+// @Router       /loan/get/{id} [get]
 func GetLoan(c *gin.Context) {
 	loanId := c.Param("id")
 	id, err := strconv.ParseInt(loanId, 10, 64)
@@ -47,6 +51,7 @@ func GetLoan(c *gin.Context) {
 
 	loan, err := con.GetLoan(ctx, &wrapperspb.Int64Value{Value: id})
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, loan)
@@ -61,7 +66,7 @@ func GetLoan(c *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  []Loan
 // @Failure      404
-// @Router       /api/get_loans/ [get]
+// @Router       /loan/all/ [get]
 func GetAllLoans(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -78,6 +83,7 @@ func GetAllLoans(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, loansList)
@@ -93,7 +99,7 @@ func GetAllLoans(c *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  []Loan
 // @Failure      404
-// @Router       /api/get_loans_by_user/{id} [get]
+// @Router       /loan/all-by-user/{id} [get]
 func GetAllLoansByUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -114,35 +120,28 @@ func GetAllLoansByUser(c *gin.Context) {
 	}
 
 	if err != nil {
+		eh.PanicOnError(err, "error")
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, loansList)
 	}
 }
 
-// Create loan
+// Create Loan Entry
 // @Schemes
-// @Description  Gets a loan
+// @Description  Creates a loan entry
 // @Tags         Loan
 // @Accept       json
-// @Param        Loan  body  Loan  true  "Loan to create"
+// @Param        LoanEntry  body  LoanEntry  true  "Create loan"
 // @Produce      json
 // @Success      200
-// @Router       /api/create_loan/ [post]
-func CreateLoan(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
-	eh.PanicOnError(err, "failed to connect to grpc")
-	defer conn.Close()
-
-	con := pb.NewLoanServiceClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	defer cancel()
-
-	var loan Loan
-	err = c.BindJSON(&loan)
-	eh.PanicOnError(err, "Couldn't bind json to loan")
-
-	ln, err := con.CreateLoan(ctx, &pb.Loan{Id: loan.Id, UserId: loan.UserId, EntityId: loan.EntityId, Status: loan.Status})
-	eh.PanicOnError(err, "failed to create loan")
-	log.Printf("Loan created in postgres with id: %d", ln.Id)
+// @Router       /loan/create/ [post]
+func CreateLoanEntry(c *gin.Context) {
+	var loanEntry LoanEntry
+	err := c.BindJSON(&loanEntry)
+	eh.PanicOnError(err, "Couldn't bind JSON")
+	ProduceLoanEntryToRabbitmq(loanEntry)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"queued": "success",
+	})
 }

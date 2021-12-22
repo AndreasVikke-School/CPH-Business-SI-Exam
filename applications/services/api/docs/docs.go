@@ -28,299 +28,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/checkout_book/:title": {
-            "get": {
-                "description": "Checkouts a book",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.BookTitle"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/create_loan/": {
-            "post": {
-                "description": "Gets a loan",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Loan"
-                ],
-                "parameters": [
-                    {
-                        "description": "Loan to create",
-                        "name": "Loan",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.Loan"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/create_loan_entry/": {
-            "post": {
-                "description": "Creates a loan entry",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "description": "Create loan entry",
-                        "name": "LoanEntry",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.LoanEntry"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/create_log/": {
-            "post": {
-                "description": "Creates a log",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Log"
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/create_log_entry/": {
-            "post": {
-                "description": "Creates a log entry",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "description": "Create log entry",
-                        "name": "LogEntry",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.LogEntry"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/create_user/": {
-            "post": {
-                "description": "Creates a user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "parameters": [
-                    {
-                        "description": "User to create",
-                        "name": "User",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book_by_search/:title": {
-            "get": {
-                "description": "Gets a list of all searched books by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.Book"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book_by_title/:title": {
-            "get": {
-                "description": "Gets a book by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Book"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book_recs_author/:title": {
-            "get": {
-                "description": "Gets a recommended list of all books from author by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.BookSimple"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book_recs_year/:title": {
-            "get": {
-                "description": "Gets a recommended list of all books from year by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.BookSimple"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book_simple_by_title/:title": {
-            "get": {
-                "description": "Gets a simplified list of books by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.BookSimple"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_books/": {
+        "/book/all/": {
             "get": {
                 "description": "Gets a list of all books",
                 "consumes": [
@@ -348,9 +56,9 @@ var doc = `{
                 }
             }
         },
-        "/api/get_loan/{id}": {
+        "/book/checkout/{title}": {
             "get": {
-                "description": "Gets a loan by id",
+                "description": "Checkouts a book",
                 "consumes": [
                     "application/json"
                 ],
@@ -358,13 +66,13 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Loan"
+                    "Book"
                 ],
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "Id of loan",
-                        "name": "id",
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
                         "in": "path",
                         "required": true
                     }
@@ -373,7 +81,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Loan"
+                            "$ref": "#/definitions/main.BookTitle"
                         }
                     },
                     "404": {
@@ -382,9 +90,9 @@ var doc = `{
                 }
             }
         },
-        "/api/get_loans/": {
+        "/book/get-recs-author/{title}": {
             "get": {
-                "description": "Gets a list of all loans",
+                "description": "Gets a recommended list of all books from author by title",
                 "consumes": [
                     "application/json"
                 ],
@@ -392,7 +100,16 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Loan"
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -400,7 +117,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/main.Loan"
+                                "$ref": "#/definitions/main.BookSimple"
                             }
                         }
                     },
@@ -410,7 +127,208 @@ var doc = `{
                 }
             }
         },
-        "/api/get_loans_by_user/{id}": {
+        "/book/get-recs-year/{title}": {
+            "get": {
+                "description": "Gets a recommended list of all books from year by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.BookSimple"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/book/get-simple/{title}": {
+            "get": {
+                "description": "Gets a simplified list of books by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookSimple"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/book/get/{title}": {
+            "get": {
+                "description": "Gets a book by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/book/return/{title}": {
+            "get": {
+                "description": "Returns a book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/book/search/{title}": {
+            "get": {
+                "description": "Gets a list of all searched books by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of book",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Book"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/book/write-csv-to-db/": {
+            "get": {
+                "description": "Writes a csv file to the db",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/loan/all-by-user/{id}": {
             "get": {
                 "description": "Gets a list of all loans by a user",
                 "consumes": [
@@ -447,9 +365,9 @@ var doc = `{
                 }
             }
         },
-        "/api/get_log_by_user/:userId/:logId": {
+        "/loan/all/": {
             "get": {
-                "description": "Gets a log by user",
+                "description": "Gets a list of all loans",
                 "consumes": [
                     "application/json"
                 ],
@@ -457,13 +375,16 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Log"
+                    "Loan"
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Log"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Loan"
+                            }
                         }
                     },
                     "404": {
@@ -472,7 +393,71 @@ var doc = `{
                 }
             }
         },
-        "/api/get_logs_by_user/:id": {
+        "/loan/create/": {
+            "post": {
+                "description": "Creates a loan entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Loan"
+                ],
+                "parameters": [
+                    {
+                        "description": "Create loan",
+                        "name": "LoanEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LoanEntry"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/loan/get/{id}": {
+            "get": {
+                "description": "Gets a loan by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Loan"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of loan",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Loan"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/log/all-by-user/{id}": {
             "get": {
                 "description": "Says a list of all logs by user",
                 "consumes": [
@@ -483,6 +468,15 @@ var doc = `{
                 ],
                 "tags": [
                     "Log"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -500,7 +494,136 @@ var doc = `{
                 }
             }
         },
-        "/api/get_user/{id}": {
+        "/log/create/": {
+            "post": {
+                "description": "Creates a log entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Log"
+                ],
+                "parameters": [
+                    {
+                        "description": "Create log entry",
+                        "name": "LogEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LogEntry"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/log/get-by-user/{userId}/{logId}": {
+            "get": {
+                "description": "Gets a log by user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Log"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of user",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id of log",
+                        "name": "logId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Log"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/all/": {
+            "get": {
+                "description": "Gets a list of all users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.User"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/create/": {
+            "post": {
+                "description": "Creates a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "description": "User to create",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/get/{id}": {
             "get": {
                 "description": "Gets a user by id",
                 "consumes": [
@@ -534,194 +657,7 @@ var doc = `{
                 }
             }
         },
-        "/api/get_users/": {
-            "get": {
-                "description": "Gets a list of all users",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.User"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl/:id": {
-            "get": {
-                "description": "Gets a vinyl by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Vinyl"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl_by_search/:title": {
-            "get": {
-                "description": "Gets a list of vinyls from search by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.Vinyl"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl_by_title/:title": {
-            "get": {
-                "description": "Gets a vinyl by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Vinyl"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl_recs_author/:title": {
-            "get": {
-                "description": "Gets a recommended list of all vinyls from artist by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.VinylSimple"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl_recs_year/:title": {
-            "get": {
-                "description": "Gets a recommended list of all vinyls from year by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.VinylSimple"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyl_simple_by_title/:title": {
-            "get": {
-                "description": "Gets a simplified list of vinyls by title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Vinyl"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.VinylSimple"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_vinyls/": {
+        "/vinyl/all/": {
             "get": {
                 "description": "Gets a list of all vinyls",
                 "consumes": [
@@ -749,9 +685,9 @@ var doc = `{
                 }
             }
         },
-        "/api/return_book/:title": {
+        "/vinyl/get-by-title/{title}": {
             "get": {
-                "description": "Returns a book",
+                "description": "Gets a vinyl by title",
                 "consumes": [
                     "application/json"
                 ],
@@ -759,13 +695,22 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of vinyl",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.BookTitle"
+                            "$ref": "#/definitions/main.Vinyl"
                         }
                     },
                     "404": {
@@ -774,9 +719,9 @@ var doc = `{
                 }
             }
         },
-        "/api/write_csv_to_db/": {
+        "/vinyl/get-recs-artist/{title}": {
             "get": {
-                "description": "Writes a csv file to the db",
+                "description": "Gets a recommended list of all vinyls from artist by title",
                 "consumes": [
                     "application/json"
                 ],
@@ -784,13 +729,25 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Book"
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of vinyl",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.BookTitle"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.VinylSimple"
+                            }
                         }
                     },
                     "404": {
@@ -799,22 +756,144 @@ var doc = `{
                 }
             }
         },
-        "/hello_world": {
+        "/vinyl/get-recs-year/{title}": {
             "get": {
-                "description": "Says Hello World",
+                "description": "Gets a recommended list of all vinyls from year by title",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of vinyl",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.VinylSimple"
+                            }
                         }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/vinyl/get-simple/{title}": {
+            "get": {
+                "description": "Gets a simplified list of vinyls by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of vinyl",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.VinylSimple"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/vinyl/get/{id}": {
+            "get": {
+                "description": "Gets a vinyl by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of vinyl",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Vinyl"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/vinyl/search/{title}": {
+            "get": {
+                "description": "Gets a list of vinyls from search by title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Vinyl"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Title of vinyl",
+                        "name": "title",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Vinyl"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": ""
                     }
                 }
             }
@@ -1001,7 +1080,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
 	Host:        "localhost:8080",
-	BasePath:    "/",
+	BasePath:    "/api",
 	Schemes:     []string{"http"},
 	Title:       "Book & Venyl Loan Service",
 	Description: "API for school project",
