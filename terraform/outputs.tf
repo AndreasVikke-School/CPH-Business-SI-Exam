@@ -13,6 +13,6 @@ output "rabbitmq_ip" {
 output "rabbitmq_web_ip" {
   value = module.rabbitmq_module.rabbitmq_web_ip
 }
-# output "neo4j_web_ip" {
-#   value = module.neo4j_module.neo4j_web_ip
-# }
+output "camunda_ip" {
+  value = module.camunda_module.camunda_ip
+}

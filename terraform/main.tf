@@ -35,6 +35,9 @@ module "neo4j_module" {
   source = "./modules/neo4j"
   neo4j  = var.neo4j
 }
+module "camunda_module" {
+  source = "./modules/camunda"
+}
 
 resource "kubernetes_namespace" "services" {
   metadata {
@@ -54,7 +57,7 @@ module "api_service" {
   service_type           = "LoadBalancer"
   service_ports = {
     server = {
-      port        = 8080,
+      port        = 8082,
       target_port = 8081
     }
   }

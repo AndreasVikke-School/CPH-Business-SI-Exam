@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "values": [
+        {
+          "label": "Yes",
+          "value": "true"
+        }
+      ],
+      "label": "Contract is signed",
+      "type": "radio",
+      "id": "Field_1konea9",
+      "key": "isContractSigned",
+      "validate": {
+        "required": true
+      },
+      "description": "Is the contract signed with record lable"
+    }
+  ],
+  "type": "default",
+  "id": "vinylContractForm"
+}

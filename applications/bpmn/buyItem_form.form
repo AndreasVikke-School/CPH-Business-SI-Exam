@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Buy Amout",
+      "type": "number",
+      "id": "Field_1v9v7fy",
+      "key": "buyAmountField",
+      "description": "The amount of items to buy",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 10
+      }
+    }
+  ],
+  "type": "default",
+  "id": "buyForm"
+}
