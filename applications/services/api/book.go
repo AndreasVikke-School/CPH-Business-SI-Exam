@@ -42,7 +42,7 @@ type BookTitle struct {
 // @Failure 404
 // @Router /api/write_csv_to_db/ [get]
 func WriteCsvToDb(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -70,7 +70,7 @@ func WriteCsvToDb(c *gin.Context) {
 func GetBookByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -98,7 +98,7 @@ func GetBookByTitle(c *gin.Context) {
 func GetBookSimpleByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -126,7 +126,7 @@ func GetBookSimpleByTitle(c *gin.Context) {
 func GetBooksBySearch(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -157,7 +157,7 @@ func GetBooksBySearch(c *gin.Context) {
 // @Failure 404
 // @Router /api/get_books/ [get]
 func GetAllBooks(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -190,7 +190,7 @@ func GetAllBooks(c *gin.Context) {
 func GetBookRecsAuthor(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -223,7 +223,7 @@ func GetBookRecsAuthor(c *gin.Context) {
 func GetBookRecsYear(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -256,7 +256,7 @@ func GetBookRecsYear(c *gin.Context) {
 func CheckoutBook(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -285,7 +285,7 @@ func CheckoutBook(c *gin.Context) {
 func ReturnBook(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 

@@ -49,7 +49,7 @@ func GetVinyl(c *gin.Context) {
 	id, err := strconv.ParseInt(vinylId, 10, 64)
 	eh.PanicOnError(err, "failed to parse bookId to int64")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -77,7 +77,7 @@ func GetVinyl(c *gin.Context) {
 func GetVinylByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -105,7 +105,7 @@ func GetVinylByTitle(c *gin.Context) {
 func GetVinylSimpleByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -133,7 +133,7 @@ func GetVinylSimpleByTitle(c *gin.Context) {
 func GetVinylsBySearch(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -164,7 +164,7 @@ func GetVinylsBySearch(c *gin.Context) {
 // @Failure 404
 // @Router /api/get_vinyls/ [get]
 func GetAllVinyls(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -197,7 +197,7 @@ func GetAllVinyls(c *gin.Context) {
 func GetVinylRecsArtist(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -230,7 +230,7 @@ func GetVinylRecsArtist(c *gin.Context) {
 func GetVinylRecsYear(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
