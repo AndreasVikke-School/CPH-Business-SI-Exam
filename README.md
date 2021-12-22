@@ -122,11 +122,11 @@ We've decided to work on the book and vinyl subscription services provider. The 
 
 
 ## Project Achitecture
-Our first architecture drawing was a pretty rough illistration of what we wanted to do, and how we would handle the assignment. As shown, we have a frontend that is connected to an API. The API handles the request, if a customer wants to see a book or vinyl, it directs through kafka, where a consumer consumes the message in queue, sends it to redis for logging, gets the resources from neo4j. Should a user want to rent a book, a request is sent to RabbitMQ, where the message is consumed and the information saved to postgres. 
+Our first architecture drawing was a pretty rough illistration of what we wanted to do, and how we would handle the assignment. As shown, we have a frontend that is connected to an API. When a customer looks at a book or vinyl, it is sent through kafka, and logged in redis. Should a user want to rent a book or vinyl, a request is sent to RabbitMQ, where the message is consumed and the information saved to postgres. 
 #### Architecture Diagram version 1.
 ![Architecture Diagram](assets/architectureV1.png "Architecture Diagram version 1.")
 
-Our second architecture drawing is a bit more detailed, showing services and clusters, as well as what each contains. But still following our first architecture drawing in the flow of the application. Although not shown like in the first drawing, the application is still running on terraform and minikube. 
+Our second architecture drawing is a bit more detailed, showing services and clusters, as well as what each contains. But still following our first architecture drawing in the flow of the application. Although not shown like in the first drawing, the application is still running on kubernetes using minikube and terraform. 
 #### Architecture Diagram version 2.
 ![Architecture Diagram](assets/architectureV2.png "Architecture Diagram version 2.")
 
@@ -136,4 +136,4 @@ Our second architecture drawing is a bit more detailed, showing services and clu
 After the team had decided which of the projects to work on, we started with sketching an architecture diagram, and discussing how to structure the project while going through the requirements of the project. This is how the [first version](#architecture-diagram-version-1) of our architecture was made. We went through the requirements again and made sure that it would fufill them.
 
 ### Development and setup
-As our first architecture drawing illustrates, we wanted to deploy our system with kubernetes through minikube using terraform. 
+As our first architecture drawing illustrates, we wanted to deploy our system to a kubernetes cluster using minikube and terraform. 
