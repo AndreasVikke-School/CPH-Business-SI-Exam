@@ -14,11 +14,12 @@ type LoanEntry struct {
 
 // Create Loan Entry
 // @Schemes
-// @Description Creates a loan entry
-// @Accept json
-// @Produce json
-// @Success 200
-// @Router /api/create_loan_entry/ [post]
+// @Description  Creates a loan entry
+// @Accept       json
+// @Param        LoanEntry  body  LoanEntry  true  "Create loan entry"
+// @Produce      json
+// @Success      200
+// @Router       /api/create_loan_entry/ [post]
 func CreateLoanEntry(c *gin.Context) {
 	var loanEntry LoanEntry
 	err := c.BindJSON(&loanEntry)

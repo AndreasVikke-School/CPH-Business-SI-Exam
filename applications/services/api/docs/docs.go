@@ -28,6 +28,61 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/checkout_book/:title": {
+            "get": {
+                "description": "Checkouts a book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/create_loan/": {
+            "post": {
+                "description": "Gets a loan",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Loan"
+                ],
+                "parameters": [
+                    {
+                        "description": "Loan to create",
+                        "name": "Loan",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Loan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/create_loan_entry/": {
             "post": {
                 "description": "Creates a loan entry",
@@ -36,6 +91,17 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Create loan entry",
+                        "name": "LoanEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LoanEntry"
+                        }
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -72,6 +138,17 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "description": "Create log entry",
+                        "name": "LogEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LogEntry"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -91,33 +168,19 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book/:id": {
-            "get": {
-                "description": "Gets a book by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                "parameters": [
+                    {
+                        "description": "User to create",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Book"
+                            "$ref": "#/definitions/main.User"
                         }
-                    },
-                    "404": {
+                    }
+                ],
+                "responses": {
+                    "200": {
                         "description": ""
                     }
                 }
@@ -285,7 +348,7 @@ var doc = `{
                 }
             }
         },
-        "/api/get_loan/:id": {
+        "/api/get_loan/{id}": {
             "get": {
                 "description": "Gets a loan by id",
                 "consumes": [
@@ -296,6 +359,15 @@ var doc = `{
                 ],
                 "tags": [
                     "Loan"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of loan",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -338,7 +410,7 @@ var doc = `{
                 }
             }
         },
-        "/api/get_loans_by_user/:id": {
+        "/api/get_loans_by_user/{id}": {
             "get": {
                 "description": "Gets a list of all loans by a user",
                 "consumes": [
@@ -349,6 +421,15 @@ var doc = `{
                 ],
                 "tags": [
                     "Loan"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of all loans by user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -419,7 +500,7 @@ var doc = `{
                 }
             }
         },
-        "/api/get_user/:id": {
+        "/api/get_user/{id}": {
             "get": {
                 "description": "Gets a user by id",
                 "consumes": [
@@ -430,6 +511,15 @@ var doc = `{
                 ],
                 "tags": [
                     "User"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -659,9 +749,9 @@ var doc = `{
                 }
             }
         },
-        "/api/loan/create_loan/": {
-            "post": {
-                "description": "Gets a loan",
+        "/api/return_book/:title": {
+            "get": {
+                "description": "Returns a book",
                 "consumes": [
                     "application/json"
                 ],
@@ -669,10 +759,41 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Loan"
+                    "Book"
                 ],
                 "responses": {
                     "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/write_csv_to_db/": {
+            "get": {
+                "description": "Writes a csv file to the db",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
                         "description": ""
                     }
                 }
@@ -712,8 +833,8 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "isbn": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -729,14 +850,22 @@ var doc = `{
                 "author": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "isbn": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "main.BookTitle": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -757,6 +886,17 @@ var doc = `{
                 }
             }
         },
+        "main.LoanEntry": {
+            "type": "object",
+            "properties": {
+                "entityId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
         "main.Log": {
             "type": "object",
             "properties": {
@@ -764,6 +904,20 @@ var doc = `{
                     "type": "integer"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "unix": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "main.LogEntry": {
+            "type": "object",
+            "properties": {
+                "entityId": {
                     "type": "integer"
                 },
                 "unix": {
@@ -847,7 +1001,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
 	Host:        "localhost:8080",
-	BasePath:    "/api/",
+	BasePath:    "/",
 	Schemes:     []string{"http"},
 	Title:       "Book & Venyl Loan Service",
 	Description: "API for school project",

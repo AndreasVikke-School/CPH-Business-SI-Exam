@@ -23,13 +23,13 @@ type Log struct {
 
 // Get Log By User
 // @Schemes
-// @Description Gets a log by user
-// @Tags Log
-// @Accept json
-// @Produce json
-// @Success 200 {object} Log
-// @Failure 404
-// @Router /api/get_log_by_user/:userId/:logId [get]
+// @Description  Gets a log by user
+// @Tags         Log
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  Log
+// @Failure      404
+// @Router       /api/get_log_by_user/:userId/:logId [get]
 func GetLogByUser(c *gin.Context) {
 	userId := c.Param("userId")
 	uId, err := strconv.ParseInt(userId, 10, 64)
@@ -57,13 +57,13 @@ func GetLogByUser(c *gin.Context) {
 
 // Get All Logs By User
 // @Schemes
-// @Description Says a list of all logs by user
-// @Tags Log
-// @Accept json
-// @Produce json
-// @Success 200 {object} []Log
-// @Failure 404
-// @Router /api/get_logs_by_user/:id [get]
+// @Description  Says a list of all logs by user
+// @Tags         Log
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []Log
+// @Failure      404
+// @Router       /api/get_logs_by_user/:id [get]
 func GetAllLogsByUser(c *gin.Context) {
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 64)
@@ -92,12 +92,13 @@ func GetAllLogsByUser(c *gin.Context) {
 
 // Create Log
 // @Schemes
-// @Description Creates a log
-// @Tags Log
-// @Accept json
-// @Produce json
-// @Success 200
-// @Router /api/create_log/ [post]
+// @Description  Creates a log
+// @Tags         Log
+// @Accept       json
+// @Param        Log  body  Log  true  "Log to create"
+// @Produce      json
+// @Success      200
+// @Router       /api/create_log/ [post]
 func CreateLog(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Redis.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")

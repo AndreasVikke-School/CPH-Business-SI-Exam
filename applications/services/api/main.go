@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/gin-contrib/cors"
@@ -16,71 +15,70 @@ var (
 	configuration Configuration
 )
 
-// @BasePath /api/
+// @title           Book & Venyl Loan Service
+// @version         1.0
+// @description     API for school project
+// @termsOfService  http://swagger.io/terms/
 
-// Hello World
-// @Schemes
-// @Description Says Hello World
-// @Accept json
-// @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Router /hello_world [get]
-func HelloWorld(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "Hello World!",
-	})
-}
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @title Book & Venyl Loan Service
-// @version 1.0
-// @description API for school project
-// @termsOfService http://swagger.io/terms/
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host localhost:8080
-// @BasePath /api/
-// @schemes http
+// @host      localhost:8080
+// @BasePath  /
+// @schemes   http
 func main() {
 	router := gin.Default()
 	router.Use(cors.Default())
 
-	router.GET("/api/hello_world/", HelloWorld)
-	router.POST("/api/create_log_entry/", CreateLogEntry)
-	router.POST("/api/create_loan_entry/", CreateLoanEntry)
+	api := router.Group("/api")
+	{
+		user := api.Group("/user")
+		{
+			user.POST("/create/", CreateUser)
+			user.GET("/get/:id", GetUser)
+			user.GET("/all/", GetAllUsers)
+		}
 
-	router.POST("/api/create_user/", CreateUser)
-	router.GET("/api/get_user/:id", GetUser)
-	router.GET("/api/get_users/", GetAllUsers)
+		loan := api.Group("/loan")
+		{
+			loan.POST("/create/", CreateLoanEntry)
+			loan.GET("/get/:id", GetLoan)
+			loan.GET("/all/", GetAllLoans)
+			loan.GET("/all-by-user/:id", GetAllLoansByUser)
+		}
 
-	router.POST("/api/create_loan/", CreateLoan)
-	router.GET("/api/get_loan/:id", GetLoan)
-	router.GET("/api/get_loans/", GetAllLoans)
-	router.GET("/api/get_loans_by_user/:id", GetAllLoansByUser)
+		log := api.Group("/log")
+		{
+			log.POST("/create/", CreateLogEntry)
+			log.GET("/get-by-user/:userId/:logId", GetLogByUser)
+			log.GET("/all-by-user/:id", GetAllLogsByUser)
+		}
 
-	router.POST("/api/create_log/", CreateLog)
-	router.GET("/api/get_log_by_user/:userId/:logId", GetLogByUser)
-	router.GET("/api/get_logs_by_user/:id", GetAllLogsByUser)
+		book := api.Group("/book")
+		{
+			book.GET("/write-csv-to-db/", WriteCsvToDb)
+			book.GET("/get/:title", GetBookByTitle)
+			book.GET("/get-simple/:title", GetBookSimpleByTitle)
+			book.GET("/search/:title", GetBooksBySearch)
+			book.GET("/all/", GetAllBooks)
+			book.GET("/get-recs-author/:title", GetBookRecsAuthor)
+			book.GET("/get-recs-year/:title", GetBookRecsYear)
+			book.GET("/checkout/:title", CheckoutBook)
+			book.GET("/return/:title", ReturnBook)
+		}
 
-	router.GET("/api//api/write_csv_to_db/", WriteCsvToDb)
-	router.GET("/api/get_book_by_title/:title", GetBookByTitle)
-	router.GET("/api/get_book_simple_by_title/:title", GetBookSimpleByTitle)
-	router.GET("/api/get_book_by_search/:title", GetBooksBySearch)
-	router.GET("/api/get_books/", GetAllBooks)
-	router.GET("/api/get_book_recs_author/:title", GetBookRecsAuthor)
-	router.GET("/api/get_book_recs_year/:title", GetBookRecsYear)
-	router.GET("/api/checkout_book/:title", CheckoutBook)
-	router.GET("/api/return_book/:title", ReturnBook)
+		vinyl := api.Group("/vinyl")
+		{
+			vinyl.GET("/get/:id", GetVinyl)
+			vinyl.GET("/get-by-title/:title", GetVinylByTitle)
+			vinyl.GET("/get-simple/:title", GetVinylSimpleByTitle)
+			vinyl.GET("/search/:title", GetVinylsBySearch)
+			vinyl.GET("/all/", GetAllVinyls)
+			vinyl.GET("/get-recs-author/:title", GetVinylRecsArtist)
+			vinyl.GET("/get-recs-year/:title", GetVinylRecsYear)
+		}
 
-	router.GET("/api/get_vinyl/:id", GetVinyl)
-	router.GET("/api/get_vinyl_by_title/:title", GetVinylByTitle)
-	router.GET("/api/get_vinyl_simple_by_title/:title", GetVinylSimpleByTitle)
-	router.GET("/api/get_vinyl_by_search/:title", GetVinylsBySearch)
-	router.GET("/api/get_vinyls/", GetAllVinyls)
-	router.GET("/api/get_vinyl_recs_author/:title", GetVinylRecsArtist)
-	// skal dette ikke være year fremfor title?
-	router.GET("/api/get_vinyl_recs_year/:title", GetVinylRecsYear)
+	}
 
 	if len(os.Args) >= 2 {
 		configuration = getConfig(os.Args[1])

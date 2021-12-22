@@ -1,4 +1,4 @@
-basePath: /api/
+basePath: /
 definitions:
   main.Book:
     properties:
@@ -8,8 +8,8 @@ definitions:
         type: string
       description:
         type: string
-      id:
-        type: integer
+      isbn:
+        type: string
       name:
         type: string
       year:
@@ -19,12 +19,17 @@ definitions:
     properties:
       author:
         type: string
-      id:
-        type: integer
+      isbn:
+        type: string
       name:
         type: string
       year:
         type: integer
+    type: object
+  main.BookTitle:
+    properties:
+      title:
+        type: string
     type: object
   main.Loan:
     properties:
@@ -37,11 +42,27 @@ definitions:
       userId:
         type: integer
     type: object
+  main.LoanEntry:
+    properties:
+      entityId:
+        type: integer
+      userId:
+        type: integer
+    type: object
   main.Log:
     properties:
       entityId:
         type: integer
       id:
+        type: integer
+      unix:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  main.LogEntry:
+    properties:
+      entityId:
         type: integer
       unix:
         type: integer
@@ -96,11 +117,53 @@ info:
   title: Book & Venyl Loan Service
   version: "1.0"
 paths:
+  /api/checkout_book/:title:
+    get:
+      consumes:
+      - application/json
+      description: Checkouts a book
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.BookTitle'
+        "404":
+          description: ""
+      tags:
+      - Book
+  /api/create_loan/:
+    post:
+      consumes:
+      - application/json
+      description: Gets a loan
+      parameters:
+      - description: Loan to create
+        in: body
+        name: Loan
+        required: true
+        schema:
+          $ref: '#/definitions/main.Loan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      tags:
+      - Loan
   /api/create_loan_entry/:
     post:
       consumes:
       - application/json
       description: Creates a loan entry
+      parameters:
+      - description: Create loan entry
+        in: body
+        name: LoanEntry
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoanEntry'
       produces:
       - application/json
       responses:
@@ -123,6 +186,13 @@ paths:
       consumes:
       - application/json
       description: Creates a log entry
+      parameters:
+      - description: Create log entry
+        in: body
+        name: LogEntry
+        required: true
+        schema:
+          $ref: '#/definitions/main.LogEntry'
       produces:
       - application/json
       responses:
@@ -133,6 +203,13 @@ paths:
       consumes:
       - application/json
       description: Creates a user
+      parameters:
+      - description: User to create
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
       produces:
       - application/json
       responses:
@@ -140,22 +217,6 @@ paths:
           description: ""
       tags:
       - User
-  /api/get_book/:id:
-    get:
-      consumes:
-      - application/json
-      description: Gets a book by id
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.Book'
-        "404":
-          description: ""
-      tags:
-      - Book
   /api/get_book_by_search/:title:
     get:
       consumes:
@@ -260,11 +321,17 @@ paths:
           description: ""
       tags:
       - Book
-  /api/get_loan/:id:
+  /api/get_loan/{id}:
     get:
       consumes:
       - application/json
       description: Gets a loan by id
+      parameters:
+      - description: Id of loan
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -294,11 +361,17 @@ paths:
           description: ""
       tags:
       - Loan
-  /api/get_loans_by_user/:id:
+  /api/get_loans_by_user/{id}:
     get:
       consumes:
       - application/json
       description: Gets a list of all loans by a user
+      parameters:
+      - description: Id of all loans by user
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -346,11 +419,17 @@ paths:
           description: ""
       tags:
       - Log
-  /api/get_user/:id:
+  /api/get_user/{id}:
     get:
       consumes:
       - application/json
       description: Gets a user by id
+      parameters:
+      - description: Id of user
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -500,18 +579,38 @@ paths:
           description: ""
       tags:
       - Vinyl
-  /api/loan/create_loan/:
-    post:
+  /api/return_book/:title:
+    get:
       consumes:
       - application/json
-      description: Gets a loan
+      description: Returns a book
       produces:
       - application/json
       responses:
         "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.BookTitle'
+        "404":
           description: ""
       tags:
-      - Loan
+      - Book
+  /api/write_csv_to_db/:
+    get:
+      consumes:
+      - application/json
+      description: Writes a csv file to the db
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.BookTitle'
+        "404":
+          description: ""
+      tags:
+      - Book
   /hello_world:
     get:
       consumes:
