@@ -188,5 +188,8 @@ After the team had decided which of the projects to work on, we started with ske
 ### Development and setup
 As our first architecture drawing illustrates, we wanted to deploy our system to a kubernetes cluster using minikube and terraform. 
 
+## Scalability
+The system that we have built is pretty strong on scalability. Kubernetes clusters include load balancers as shown on [the second architecture drawing](#architecture-diagram-version-2). As the system scales, the difference between read and writes increases. With the use case we've built from, the system would need more read replicas as it grew in size and the number of users increased. This would mainly affect redis, as it logs users actions during user flow. 
+
 ## Further Development
 Any further development of the project after hand in date will be noted here. 
