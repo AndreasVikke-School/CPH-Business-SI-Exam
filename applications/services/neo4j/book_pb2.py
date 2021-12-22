@@ -21,23 +21,23 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\004/rpc\252\002\006Protos',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nbook.proto\x12\x03rpc\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x16\n\x05Title\x12\r\n\x05title\x18\x01 \x01(\t\"c\n\x04\x42ook\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x03\x12\x0c\n\x04year\x18\x06 \x01(\x03\"D\n\nBookSimple\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x0c\n\x04year\x18\x04 \x01(\x03\"$\n\x08\x42ookList\x12\x18\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\t.rpc.Book\"0\n\x0e\x42ookSimpleList\x12\x1e\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\x0f.rpc.BookSimple2\xed\x02\n\x0b\x42ookService\x12\x31\n\x07GetBook\x12\x1b.google.protobuf.Int64Value\x1a\t.rpc.Book\x12\'\n\x0eGetBookByTitle\x12\n.rpc.Title\x1a\t.rpc.Book\x12\x33\n\x14GetBookSimpleByTitle\x12\n.rpc.Title\x1a\x0f.rpc.BookSimple\x12-\n\x10GetBooksBySearch\x12\n.rpc.Title\x1a\r.rpc.BookList\x12\x34\n\x0bGetAllBooks\x12\x16.google.protobuf.Empty\x1a\r.rpc.BookList\x12\x34\n\x11GetBookRecsAuthor\x12\n.rpc.Title\x1a\x13.rpc.BookSimpleList\x12\x32\n\x0fGetBookRecsYear\x12\n.rpc.Title\x1a\x13.rpc.BookSimpleListB\x0fZ\x04/rpc\xaa\x02\x06Protosb\x06proto3'
+  serialized_pb=b'\n\nbook.proto\x12\x03rpc\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x1a\n\tBookTitle\x12\r\n\x05title\x18\x01 \x01(\t\"t\n\x04\x42ook\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x03\x12\x0c\n\x04year\x18\x06 \x01(\x03\x12\r\n\x05genre\x18\x07 \x01(\t\"F\n\nBookSimple\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x0c\n\x04year\x18\x04 \x01(\x03\"$\n\x08\x42ookList\x12\x18\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\t.rpc.Book\"0\n\x0e\x42ookSimpleList\x12\x1e\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\x0f.rpc.BookSimple2\x97\x04\n\x0b\x42ookService\x12\x36\n\x0cWriteCsvToDb\x12\x16.google.protobuf.Empty\x1a\x0e.rpc.BookTitle\x12\x31\n\x07GetBook\x12\x1b.google.protobuf.Int64Value\x1a\t.rpc.Book\x12+\n\x0eGetBookByTitle\x12\x0e.rpc.BookTitle\x1a\t.rpc.Book\x12\x37\n\x14GetBookSimpleByTitle\x12\x0e.rpc.BookTitle\x1a\x0f.rpc.BookSimple\x12\x31\n\x10GetBooksBySearch\x12\x0e.rpc.BookTitle\x1a\r.rpc.BookList\x12\x34\n\x0bGetAllBooks\x12\x16.google.protobuf.Empty\x1a\r.rpc.BookList\x12\x38\n\x11GetBookRecsAuthor\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12\x36\n\x0fGetBookRecsYear\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12.\n\x0c\x43heckoutBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitle\x12,\n\nReturnBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitleB\x0fZ\x04/rpc\xaa\x02\x06Protosb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
 
 
 
-_TITLE = _descriptor.Descriptor(
-  name='Title',
-  full_name='rpc.Title',
+_BOOKTITLE = _descriptor.Descriptor(
+  name='BookTitle',
+  full_name='rpc.BookTitle',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='title', full_name='rpc.Title.title', index=0,
+      name='title', full_name='rpc.BookTitle.title', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -56,7 +56,7 @@ _TITLE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=80,
-  serialized_end=102,
+  serialized_end=106,
 )
 
 
@@ -69,9 +69,9 @@ _BOOK = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='rpc.Book.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='isbn', full_name='rpc.Book.isbn', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -110,6 +110,13 @@ _BOOK = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='genre', full_name='rpc.Book.genre', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -122,8 +129,8 @@ _BOOK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=104,
-  serialized_end=203,
+  serialized_start=108,
+  serialized_end=224,
 )
 
 
@@ -136,9 +143,9 @@ _BOOKSIMPLE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='rpc.BookSimple.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='isbn', full_name='rpc.BookSimple.isbn', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -175,8 +182,8 @@ _BOOKSIMPLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=205,
-  serialized_end=273,
+  serialized_start=226,
+  serialized_end=296,
 )
 
 
@@ -207,8 +214,8 @@ _BOOKLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=275,
-  serialized_end=311,
+  serialized_start=298,
+  serialized_end=334,
 )
 
 
@@ -239,25 +246,25 @@ _BOOKSIMPLELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=313,
-  serialized_end=361,
+  serialized_start=336,
+  serialized_end=384,
 )
 
 _BOOKLIST.fields_by_name['books'].message_type = _BOOK
 _BOOKSIMPLELIST.fields_by_name['books'].message_type = _BOOKSIMPLE
-DESCRIPTOR.message_types_by_name['Title'] = _TITLE
+DESCRIPTOR.message_types_by_name['BookTitle'] = _BOOKTITLE
 DESCRIPTOR.message_types_by_name['Book'] = _BOOK
 DESCRIPTOR.message_types_by_name['BookSimple'] = _BOOKSIMPLE
 DESCRIPTOR.message_types_by_name['BookList'] = _BOOKLIST
 DESCRIPTOR.message_types_by_name['BookSimpleList'] = _BOOKSIMPLELIST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Title = _reflection.GeneratedProtocolMessageType('Title', (_message.Message,), {
-  'DESCRIPTOR' : _TITLE,
+BookTitle = _reflection.GeneratedProtocolMessageType('BookTitle', (_message.Message,), {
+  'DESCRIPTOR' : _BOOKTITLE,
   '__module__' : 'book_pb2'
-  # @@protoc_insertion_point(class_scope:rpc.Title)
+  # @@protoc_insertion_point(class_scope:rpc.BookTitle)
   })
-_sym_db.RegisterMessage(Title)
+_sym_db.RegisterMessage(BookTitle)
 
 Book = _reflection.GeneratedProtocolMessageType('Book', (_message.Message,), {
   'DESCRIPTOR' : _BOOK,
@@ -297,13 +304,23 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=364,
-  serialized_end=729,
+  serialized_start=387,
+  serialized_end=922,
   methods=[
+  _descriptor.MethodDescriptor(
+    name='WriteCsvToDb',
+    full_name='rpc.BookService.WriteCsvToDb',
+    index=0,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=_BOOKTITLE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
   _descriptor.MethodDescriptor(
     name='GetBook',
     full_name='rpc.BookService.GetBook',
-    index=0,
+    index=1,
     containing_service=None,
     input_type=google_dot_protobuf_dot_wrappers__pb2._INT64VALUE,
     output_type=_BOOK,
@@ -313,9 +330,9 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookByTitle',
     full_name='rpc.BookService.GetBookByTitle',
-    index=1,
+    index=2,
     containing_service=None,
-    input_type=_TITLE,
+    input_type=_BOOKTITLE,
     output_type=_BOOK,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -323,9 +340,9 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookSimpleByTitle',
     full_name='rpc.BookService.GetBookSimpleByTitle',
-    index=2,
+    index=3,
     containing_service=None,
-    input_type=_TITLE,
+    input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -333,9 +350,9 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBooksBySearch',
     full_name='rpc.BookService.GetBooksBySearch',
-    index=3,
+    index=4,
     containing_service=None,
-    input_type=_TITLE,
+    input_type=_BOOKTITLE,
     output_type=_BOOKLIST,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -343,7 +360,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetAllBooks',
     full_name='rpc.BookService.GetAllBooks',
-    index=4,
+    index=5,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_BOOKLIST,
@@ -353,9 +370,9 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookRecsAuthor',
     full_name='rpc.BookService.GetBookRecsAuthor',
-    index=5,
+    index=6,
     containing_service=None,
-    input_type=_TITLE,
+    input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLELIST,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -363,10 +380,30 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookRecsYear',
     full_name='rpc.BookService.GetBookRecsYear',
-    index=6,
+    index=7,
     containing_service=None,
-    input_type=_TITLE,
+    input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLELIST,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='CheckoutBook',
+    full_name='rpc.BookService.CheckoutBook',
+    index=8,
+    containing_service=None,
+    input_type=_BOOKTITLE,
+    output_type=_BOOKTITLE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ReturnBook',
+    full_name='rpc.BookService.ReturnBook',
+    index=9,
+    containing_service=None,
+    input_type=_BOOKTITLE,
+    output_type=_BOOKTITLE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

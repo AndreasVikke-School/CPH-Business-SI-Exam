@@ -8,6 +8,8 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 
 service BookService {
+  // Returns msg with string
+  rpc WriteCsvToDb (google.protobuf.Empty) returns (BookTitle);
   rpc GetBook (google.protobuf.Int64Value) returns (Book);
   rpc GetBookByTitle (BookTitle) returns (Book);
   rpc GetBookSimpleByTitle (BookTitle) returns (BookSimple);
@@ -16,6 +18,8 @@ service BookService {
   // Parameters should be changed from title to isbn
   rpc GetBookRecsAuthor (BookTitle) returns (BookSimpleList);
   rpc GetBookRecsYear (BookTitle) returns (BookSimpleList);
+  rpc CheckoutBook (BookTitle) returns (BookTitle);
+  rpc ReturnBook (BookTitle) returns (BookTitle);
   // rpc GetBookRecsgenre (Book) returns (BookList);
 }
 
@@ -24,16 +28,17 @@ message BookTitle {
 }
 
 message Book {
-  int64 id = 1;
+  string isbn = 1;
   string name = 2;
   string description = 3;
   string author = 4;
   int64 amount = 5;
   int64 year = 6;
+  string genre = 7;
 }
 
 message BookSimple {
-  int64 id = 1;
+  string isbn = 1;
   string name = 2;
   string author = 3;
   int64 year = 4;
