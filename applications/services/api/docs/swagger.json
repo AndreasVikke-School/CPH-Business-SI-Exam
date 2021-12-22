@@ -15,8 +15,63 @@
         "version": "1.0"
     },
     "host": "localhost:8080",
-    "basePath": "/api/",
+    "basePath": "/",
     "paths": {
+        "/api/checkout_book/:title": {
+            "get": {
+                "description": "Checkouts a book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/create_loan/": {
+            "post": {
+                "description": "Gets a loan",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Loan"
+                ],
+                "parameters": [
+                    {
+                        "description": "Loan to create",
+                        "name": "Loan",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Loan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/create_loan_entry/": {
             "post": {
                 "description": "Creates a loan entry",
@@ -25,6 +80,17 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Create loan entry",
+                        "name": "LoanEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LoanEntry"
+                        }
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -61,6 +127,17 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "description": "Create log entry",
+                        "name": "LogEntry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LogEntry"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -80,33 +157,19 @@
                 "tags": [
                     "User"
                 ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/get_book/:id": {
-            "get": {
-                "description": "Gets a book by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                "parameters": [
+                    {
+                        "description": "User to create",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Book"
+                            "$ref": "#/definitions/main.User"
                         }
-                    },
-                    "404": {
+                    }
+                ],
+                "responses": {
+                    "200": {
                         "description": ""
                     }
                 }
@@ -274,7 +337,7 @@
                 }
             }
         },
-        "/api/get_loan/:id": {
+        "/api/get_loan/{id}": {
             "get": {
                 "description": "Gets a loan by id",
                 "consumes": [
@@ -285,6 +348,15 @@
                 ],
                 "tags": [
                     "Loan"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of loan",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -327,7 +399,7 @@
                 }
             }
         },
-        "/api/get_loans_by_user/:id": {
+        "/api/get_loans_by_user/{id}": {
             "get": {
                 "description": "Gets a list of all loans by a user",
                 "consumes": [
@@ -338,6 +410,15 @@
                 ],
                 "tags": [
                     "Loan"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of all loans by user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -408,7 +489,7 @@
                 }
             }
         },
-        "/api/get_user/:id": {
+        "/api/get_user/{id}": {
             "get": {
                 "description": "Gets a user by id",
                 "consumes": [
@@ -419,6 +500,15 @@
                 ],
                 "tags": [
                     "User"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -648,9 +738,9 @@
                 }
             }
         },
-        "/api/loan/create_loan/": {
-            "post": {
-                "description": "Gets a loan",
+        "/api/return_book/:title": {
+            "get": {
+                "description": "Returns a book",
                 "consumes": [
                     "application/json"
                 ],
@@ -658,10 +748,41 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Loan"
+                    "Book"
                 ],
                 "responses": {
                     "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/write_csv_to_db/": {
+            "get": {
+                "description": "Writes a csv file to the db",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.BookTitle"
+                        }
+                    },
+                    "404": {
                         "description": ""
                     }
                 }
@@ -701,8 +822,8 @@
                 "description": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "isbn": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -718,14 +839,22 @@
                 "author": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "isbn": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "main.BookTitle": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -746,6 +875,17 @@
                 }
             }
         },
+        "main.LoanEntry": {
+            "type": "object",
+            "properties": {
+                "entityId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
         "main.Log": {
             "type": "object",
             "properties": {
@@ -753,6 +893,20 @@
                     "type": "integer"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "unix": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "main.LogEntry": {
+            "type": "object",
+            "properties": {
+                "entityId": {
                     "type": "integer"
                 },
                 "unix": {

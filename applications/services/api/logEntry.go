@@ -16,11 +16,12 @@ type LogEntry struct {
 
 // Create Log Entry
 // @Schemes
-// @Description Creates a log entry
-// @Accept json
-// @Produce json
-// @Success 200
-// @Router /api/create_log_entry/ [post]
+// @Description  Creates a log entry
+// @Accept       json
+// @Param        LogEntry  body  LogEntry  true  "Create log entry"
+// @Produce      json
+// @Success      200
+// @Router       /api/create_log_entry/ [post]
 func CreateLogEntry(c *gin.Context) {
 	var logEntry LogEntry
 	err := c.BindJSON(&logEntry)

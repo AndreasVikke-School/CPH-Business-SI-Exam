@@ -37,13 +37,13 @@ type HTTPError struct {
 
 // Get Vinyl
 // @Schemes
-// @Description Gets a vinyl by id
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} Vinyl
-// @Failure 404
-// @Router /api/get_vinyl/:id [get]
+// @Description  Gets a vinyl by id
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  Vinyl
+// @Failure      404
+// @Router       /api/get_vinyl/:id [get]
 func GetVinyl(c *gin.Context) {
 	vinylId := c.Param("id")
 	id, err := strconv.ParseInt(vinylId, 10, 64)
@@ -67,13 +67,13 @@ func GetVinyl(c *gin.Context) {
 
 // Get Vinyl By Title
 // @Schemes
-// @Description Gets a vinyl by title
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} Vinyl
-// @Failure 404
-// @Router /api/get_vinyl_by_title/:title [get]
+// @Description  Gets a vinyl by title
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  Vinyl
+// @Failure      404
+// @Router       /api/get_vinyl_by_title/:title [get]
 func GetVinylByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -95,13 +95,13 @@ func GetVinylByTitle(c *gin.Context) {
 
 // Get Vinyls Simplified By Title
 // @Schemes
-// @Description Gets a simplified list of vinyls by title
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} VinylSimple
-// @Failure 404
-// @Router /api/get_vinyl_simple_by_title/:title [get]
+// @Description  Gets a simplified list of vinyls by title
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  VinylSimple
+// @Failure      404
+// @Router       /api/get_vinyl_simple_by_title/:title [get]
 func GetVinylSimpleByTitle(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -123,13 +123,13 @@ func GetVinylSimpleByTitle(c *gin.Context) {
 
 // Get Vinyls By Search
 // @Schemes
-// @Description Gets a list of vinyls from search by title
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} []Vinyl
-// @Failure 404
-// @Router /api/get_vinyl_by_search/:title [get]
+// @Description  Gets a list of vinyls from search by title
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []Vinyl
+// @Failure      404
+// @Router       /api/get_vinyl_by_search/:title [get]
 func GetVinylsBySearch(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -156,13 +156,13 @@ func GetVinylsBySearch(c *gin.Context) {
 
 // Get Vinyls
 // @Schemes
-// @Description Gets a list of all vinyls
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} []Vinyl
-// @Failure 404
-// @Router /api/get_vinyls/ [get]
+// @Description  Gets a list of all vinyls
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []Vinyl
+// @Failure      404
+// @Router       /api/get_vinyls/ [get]
 func GetAllVinyls(c *gin.Context) {
 	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
@@ -187,13 +187,13 @@ func GetAllVinyls(c *gin.Context) {
 
 // Get Vinyls Recommended Artist
 // @Schemes
-// @Description Gets a recommended list of all vinyls from artist by title
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} []VinylSimple
-// @Failure 404
-// @Router /api/get_vinyl_recs_author/:title [get]
+// @Description  Gets a recommended list of all vinyls from artist by title
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []VinylSimple
+// @Failure      404
+// @Router       /api/get_vinyl_recs_author/:title [get]
 func GetVinylRecsArtist(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
@@ -220,13 +220,13 @@ func GetVinylRecsArtist(c *gin.Context) {
 
 // Get Vinyls Recommended Year
 // @Schemes
-// @Description Gets a recommended list of all vinyls from year by title
-// @Tags Vinyl
-// @Accept json
-// @Produce json
-// @Success 200 {object} []VinylSimple
-// @Failure 404
-// @Router /api/get_vinyl_recs_year/:title [get]
+// @Description  Gets a recommended list of all vinyls from year by title
+// @Tags         Vinyl
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []VinylSimple
+// @Failure      404
+// @Router       /api/get_vinyl_recs_year/:title [get]
 func GetVinylRecsYear(c *gin.Context) {
 	vinylTitle := c.Param("title")
 
