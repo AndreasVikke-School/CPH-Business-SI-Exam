@@ -4,7 +4,6 @@ import grpc
 
 import book_pb2 as book__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 
 
 class BookServiceStub(object):
@@ -20,11 +19,6 @@ class BookServiceStub(object):
                 '/rpc.BookService/WriteCsvToDb',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=book__pb2.BookTitle.FromString,
-                )
-        self.GetBook = channel.unary_unary(
-                '/rpc.BookService/GetBook',
-                request_serializer=google_dot_protobuf_dot_wrappers__pb2.Int64Value.SerializeToString,
-                response_deserializer=book__pb2.Book.FromString,
                 )
         self.GetBookByTitle = channel.unary_unary(
                 '/rpc.BookService/GetBookByTitle',
@@ -74,12 +68,6 @@ class BookServiceServicer(object):
     def WriteCsvToDb(self, request, context):
         """Returns msg with string
         """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetBook(self, request, context):
-        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -141,11 +129,6 @@ def add_BookServiceServicer_to_server(servicer, server):
                     servicer.WriteCsvToDb,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=book__pb2.BookTitle.SerializeToString,
-            ),
-            'GetBook': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetBook,
-                    request_deserializer=google_dot_protobuf_dot_wrappers__pb2.Int64Value.FromString,
-                    response_serializer=book__pb2.Book.SerializeToString,
             ),
             'GetBookByTitle': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBookByTitle,
@@ -211,23 +194,6 @@ class BookService(object):
         return grpc.experimental.unary_unary(request, target, '/rpc.BookService/WriteCsvToDb',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             book__pb2.BookTitle.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetBook(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/rpc.BookService/GetBook',
-            google_dot_protobuf_dot_wrappers__pb2.Int64Value.SerializeToString,
-            book__pb2.Book.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

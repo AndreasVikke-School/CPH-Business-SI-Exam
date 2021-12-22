@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\004/rpc\252\002\006Protos',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nbook.proto\x12\x03rpc\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x1a\n\tBookTitle\x12\r\n\x05title\x18\x01 \x01(\t\"t\n\x04\x42ook\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x03\x12\x0c\n\x04year\x18\x06 \x01(\x03\x12\r\n\x05genre\x18\x07 \x01(\t\"F\n\nBookSimple\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x0c\n\x04year\x18\x04 \x01(\x03\"$\n\x08\x42ookList\x12\x18\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\t.rpc.Book\"0\n\x0e\x42ookSimpleList\x12\x1e\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\x0f.rpc.BookSimple2\x97\x04\n\x0b\x42ookService\x12\x36\n\x0cWriteCsvToDb\x12\x16.google.protobuf.Empty\x1a\x0e.rpc.BookTitle\x12\x31\n\x07GetBook\x12\x1b.google.protobuf.Int64Value\x1a\t.rpc.Book\x12+\n\x0eGetBookByTitle\x12\x0e.rpc.BookTitle\x1a\t.rpc.Book\x12\x37\n\x14GetBookSimpleByTitle\x12\x0e.rpc.BookTitle\x1a\x0f.rpc.BookSimple\x12\x31\n\x10GetBooksBySearch\x12\x0e.rpc.BookTitle\x1a\r.rpc.BookList\x12\x34\n\x0bGetAllBooks\x12\x16.google.protobuf.Empty\x1a\r.rpc.BookList\x12\x38\n\x11GetBookRecsAuthor\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12\x36\n\x0fGetBookRecsYear\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12.\n\x0c\x43heckoutBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitle\x12,\n\nReturnBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitleB\x0fZ\x04/rpc\xaa\x02\x06Protosb\x06proto3'
+  serialized_pb=b'\n\nbook.proto\x12\x03rpc\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x1a\n\tBookTitle\x12\r\n\x05title\x18\x01 \x01(\t\"t\n\x04\x42ook\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x03\x12\x0c\n\x04year\x18\x06 \x01(\x03\x12\r\n\x05genre\x18\x07 \x01(\t\"F\n\nBookSimple\x12\x0c\n\x04isbn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x0c\n\x04year\x18\x04 \x01(\x03\"$\n\x08\x42ookList\x12\x18\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\t.rpc.Book\"0\n\x0e\x42ookSimpleList\x12\x1e\n\x05\x62ooks\x18\x01 \x03(\x0b\x32\x0f.rpc.BookSimple2\xe4\x03\n\x0b\x42ookService\x12\x36\n\x0cWriteCsvToDb\x12\x16.google.protobuf.Empty\x1a\x0e.rpc.BookTitle\x12+\n\x0eGetBookByTitle\x12\x0e.rpc.BookTitle\x1a\t.rpc.Book\x12\x37\n\x14GetBookSimpleByTitle\x12\x0e.rpc.BookTitle\x1a\x0f.rpc.BookSimple\x12\x31\n\x10GetBooksBySearch\x12\x0e.rpc.BookTitle\x1a\r.rpc.BookList\x12\x34\n\x0bGetAllBooks\x12\x16.google.protobuf.Empty\x1a\r.rpc.BookList\x12\x38\n\x11GetBookRecsAuthor\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12\x36\n\x0fGetBookRecsYear\x12\x0e.rpc.BookTitle\x1a\x13.rpc.BookSimpleList\x12.\n\x0c\x43heckoutBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitle\x12,\n\nReturnBook\x12\x0e.rpc.BookTitle\x1a\x0e.rpc.BookTitleB\x0fZ\x04/rpc\xaa\x02\x06Protosb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -305,7 +305,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=387,
-  serialized_end=922,
+  serialized_end=871,
   methods=[
   _descriptor.MethodDescriptor(
     name='WriteCsvToDb',
@@ -318,19 +318,9 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='GetBook',
-    full_name='rpc.BookService.GetBook',
-    index=1,
-    containing_service=None,
-    input_type=google_dot_protobuf_dot_wrappers__pb2._INT64VALUE,
-    output_type=_BOOK,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
     name='GetBookByTitle',
     full_name='rpc.BookService.GetBookByTitle',
-    index=2,
+    index=1,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOK,
@@ -340,7 +330,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookSimpleByTitle',
     full_name='rpc.BookService.GetBookSimpleByTitle',
-    index=3,
+    index=2,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLE,
@@ -350,7 +340,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBooksBySearch',
     full_name='rpc.BookService.GetBooksBySearch',
-    index=4,
+    index=3,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKLIST,
@@ -360,7 +350,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetAllBooks',
     full_name='rpc.BookService.GetAllBooks',
-    index=5,
+    index=4,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_BOOKLIST,
@@ -370,7 +360,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookRecsAuthor',
     full_name='rpc.BookService.GetBookRecsAuthor',
-    index=6,
+    index=5,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLELIST,
@@ -380,7 +370,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetBookRecsYear',
     full_name='rpc.BookService.GetBookRecsYear',
-    index=7,
+    index=6,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKSIMPLELIST,
@@ -390,7 +380,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='CheckoutBook',
     full_name='rpc.BookService.CheckoutBook',
-    index=8,
+    index=7,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKTITLE,
@@ -400,7 +390,7 @@ _BOOKSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ReturnBook',
     full_name='rpc.BookService.ReturnBook',
-    index=9,
+    index=8,
     containing_service=None,
     input_type=_BOOKTITLE,
     output_type=_BOOKTITLE,

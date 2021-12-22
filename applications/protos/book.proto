@@ -10,7 +10,6 @@ import "google/protobuf/empty.proto";
 service BookService {
   // Returns msg with string
   rpc WriteCsvToDb (google.protobuf.Empty) returns (BookTitle);
-  rpc GetBook (google.protobuf.Int64Value) returns (Book);
   rpc GetBookByTitle (BookTitle) returns (Book);
   rpc GetBookSimpleByTitle (BookTitle) returns (BookSimple);
   rpc GetBooksBySearch (BookTitle) returns (BookList);
