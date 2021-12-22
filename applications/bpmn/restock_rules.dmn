@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_1aqujz2" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="restock_rules" name="Restock request validation">
+    <decisionTable id="DecisionTable_05dtjql" hitPolicy="FIRST">
+      <input id="Input_1" label="Item Type" biodi:width="211">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>itemType</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0tq7zdf" label="Total Item Count" biodi:width="192">
+        <inputExpression id="LiteralExpression_07ehj8t" typeRef="long">
+          <text>existingItemCount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Is Approved" name="isApproved" typeRef="boolean" biodi:width="192" />
+      <output id="OutputClause_05jnd5s" label="Own Item" name="ownItem" typeRef="boolean" />
+      <rule id="DecisionRule_0clvfzl">
+        <inputEntry id="UnaryTests_1rpjfr7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17zlz7t">
+          <text>&lt;= 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08f2qm1">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1oylaqc">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wovk8k">
+        <inputEntry id="UnaryTests_1cj6te8">
+          <text>"book"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qazmkq">
+          <text>&gt;= 15</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08szrvu">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1of7xzh">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0eilwsm">
+        <inputEntry id="UnaryTests_0gsffpu">
+          <text>"vinyl"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y9vb5o">
+          <text>&gt;= 10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bz9sb0">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fnfznx">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05zzpio">
+        <inputEntry id="UnaryTests_00s5stg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1t2qr8v">
+          <text>&gt; 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kzcban">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1xzf9nq">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="restock_rules">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

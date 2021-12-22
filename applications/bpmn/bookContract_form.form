@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "ISBN",
+      "type": "textfield",
+      "id": "Field_0ec0ijw",
+      "key": "bookISBN",
+      "description": "The ISBN for the desired book",
+      "validate": {
+        "required": true,
+        "minLength": 10,
+        "maxLength": 13
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "Yes",
+          "value": "true"
+        }
+      ],
+      "label": "Contract is signed",
+      "type": "radio",
+      "id": "Field_1konea9",
+      "key": "isContractSigned",
+      "validate": {
+        "required": true
+      },
+      "description": "Is the contract signed with publisher"
+    }
+  ],
+  "type": "default",
+  "id": "bookContractForm"
+}

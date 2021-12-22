@@ -63,14 +63,15 @@ func main() {
 	router.GET("/api/get_log_by_user/:userId/:logId", GetLogByUser)
 	router.GET("/api/get_logs_by_user/:id", GetAllLogsByUser)
 
-	router.GET("/api/get_book/:id", GetBook)
+	router.GET("/api//api/write_csv_to_db/", WriteCsvToDb)
 	router.GET("/api/get_book_by_title/:title", GetBookByTitle)
 	router.GET("/api/get_book_simple_by_title/:title", GetBookSimpleByTitle)
 	router.GET("/api/get_book_by_search/:title", GetBooksBySearch)
 	router.GET("/api/get_books/", GetAllBooks)
 	router.GET("/api/get_book_recs_author/:title", GetBookRecsAuthor)
-	// skal dette ikke være year fremfor title?
 	router.GET("/api/get_book_recs_year/:title", GetBookRecsYear)
+	router.GET("/api/checkout_book/:title", CheckoutBook)
+	router.GET("/api/return_book/:title", ReturnBook)
 
 	router.GET("/api/get_vinyl/:id", GetVinyl)
 	router.GET("/api/get_vinyl_by_title/:title", GetVinylByTitle)
