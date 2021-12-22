@@ -22,7 +22,7 @@ type Configuration struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
 	} `json:"rabbitmq"`
-	Neo4j struct {
+	Neo4J struct {
 		Service string `json:"service"`
 	} `json:"neo4j"`
 }

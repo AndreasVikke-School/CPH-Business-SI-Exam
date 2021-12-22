@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"net/http"
-	"strconv"
 	"time"
 
 	eh "github.com/andreasvikke-school/CPH-Bussiness-SI-Exam/applications/services/api/errorhandler"
@@ -11,11 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 type Book struct {
-	Id          int64  `json:"id,omitempty"`
+	Isbn        string `json:"isbn,omitempty"`
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
 	Author      string `json:"author,omitempty"`
@@ -24,27 +22,27 @@ type Book struct {
 }
 
 type BookSimple struct {
-	Id     int64  `json:"id,omitempty"`
+	Isbn   string `json:"isbn,omitempty"`
 	Name   string `json:"name,omitempty"`
 	Author string `json:"author,omitempty"`
 	Year   int64  `json:"year,omitempty"`
 }
 
-// Get Book
+type BookTitle struct {
+	Title string `json:"title,omitempty"`
+}
+
+// Write Csv To Db
 // @Schemes
-// @Description Gets a book by id
+// @Description Writes a csv file to the db
 // @Tags Book
 // @Accept json
 // @Produce json
-// @Success 200 {object} Book
+// @Success 200 {object} BookTitle
 // @Failure 404
-// @Router /api/get_book/:id [get]
-func GetBook(c *gin.Context) {
-	bookId := c.Param("id")
-	id, err := strconv.ParseInt(bookId, 10, 64)
-	eh.PanicOnError(err, "failed to parse bookId to int64")
-
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+// @Router /api/write_csv_to_db/ [get]
+func WriteCsvToDb(c *gin.Context) {
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -52,11 +50,11 @@ func GetBook(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	book, err := con.GetBook(ctx, &wrapperspb.Int64Value{Value: id})
+	bookT, err := con.WriteCsvToDb(ctx, &emptypb.Empty{})
 	if err != nil {
 		c.Status(http.StatusNotFound)
 	} else {
-		c.IndentedJSON(http.StatusOK, book)
+		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})
 	}
 }
 
@@ -72,7 +70,7 @@ func GetBook(c *gin.Context) {
 func GetBookByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -100,7 +98,7 @@ func GetBookByTitle(c *gin.Context) {
 func GetBookSimpleByTitle(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -128,7 +126,7 @@ func GetBookSimpleByTitle(c *gin.Context) {
 func GetBooksBySearch(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -139,7 +137,7 @@ func GetBooksBySearch(c *gin.Context) {
 	books, err := con.GetBooksBySearch(ctx, &pb.BookTitle{Title: bookTitle})
 	booklist := []Book{}
 	for _, b := range books.Books {
-		booklist = append(booklist, Book{Id: b.Id, Name: b.Name, Description: b.Description, Author: b.Author, Amount: b.Amount, Year: b.Year})
+		booklist = append(booklist, Book{Isbn: b.Isbn, Name: b.Name, Description: b.Description, Author: b.Author, Amount: b.Amount, Year: b.Year})
 	}
 
 	if err != nil {
@@ -159,7 +157,7 @@ func GetBooksBySearch(c *gin.Context) {
 // @Failure 404
 // @Router /api/get_books/ [get]
 func GetAllBooks(c *gin.Context) {
-	conn, err := grpc.Dial(configuration.Postgres.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -170,7 +168,7 @@ func GetAllBooks(c *gin.Context) {
 	books, err := con.GetAllBooks(ctx, &emptypb.Empty{})
 	bookList := []Book{}
 	for _, b := range books.Books {
-		bookList = append(bookList, Book{Id: b.Id, Name: b.Name, Description: b.Description, Author: b.Author, Amount: b.Amount, Year: b.Year})
+		bookList = append(bookList, Book{Isbn: b.Isbn, Name: b.Name, Description: b.Description, Author: b.Author, Amount: b.Amount, Year: b.Year})
 	}
 
 	if err != nil {
@@ -192,7 +190,7 @@ func GetAllBooks(c *gin.Context) {
 func GetBookRecsAuthor(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -203,7 +201,7 @@ func GetBookRecsAuthor(c *gin.Context) {
 	books, err := con.GetBookRecsAuthor(ctx, &pb.BookTitle{Title: bookTitle})
 	booklist := []BookSimple{}
 	for _, b := range books.Books {
-		booklist = append(booklist, BookSimple{Id: b.Id, Name: b.Name, Author: b.Author, Year: b.Year})
+		booklist = append(booklist, BookSimple{Isbn: b.Isbn, Name: b.Name, Author: b.Author, Year: b.Year})
 	}
 
 	if err != nil {
@@ -225,7 +223,7 @@ func GetBookRecsAuthor(c *gin.Context) {
 func GetBookRecsYear(c *gin.Context) {
 	bookTitle := c.Param("title")
 
-	conn, err := grpc.Dial(configuration.Neo4j.Service, grpc.WithInsecure())
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
 	eh.PanicOnError(err, "failed to connect to grpc")
 	defer conn.Close()
 
@@ -236,12 +234,70 @@ func GetBookRecsYear(c *gin.Context) {
 	books, err := con.GetBookRecsYear(ctx, &pb.BookTitle{Title: bookTitle})
 	booklist := []BookSimple{}
 	for _, b := range books.Books {
-		booklist = append(booklist, BookSimple{Id: b.Id, Name: b.Name, Author: b.Author, Year: b.Year})
+		booklist = append(booklist, BookSimple{Isbn: b.Isbn, Name: b.Name, Author: b.Author, Year: b.Year})
 	}
 
 	if err != nil {
 		c.Status(http.StatusNotFound)
 	} else {
 		c.IndentedJSON(http.StatusOK, booklist)
+	}
+}
+
+// Checkout Book
+// @Schemes
+// @Description Checkouts a book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} BookTitle
+// @Failure 404
+// @Router /api/checkout_book/:title [get]
+func CheckoutBook(c *gin.Context) {
+	bookTitle := c.Param("title")
+
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
+	eh.PanicOnError(err, "failed to connect to grpc")
+	defer conn.Close()
+
+	con := pb.NewBookServiceClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+
+	bookT, err := con.CheckoutBook(ctx, &pb.BookTitle{Title: bookTitle})
+
+	if err != nil {
+		c.Status(http.StatusNotFound)
+	} else {
+		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})
+	}
+}
+
+// Return Book
+// @Schemes
+// @Description Returns a book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Success 200 {object} BookTitle
+// @Failure 404
+// @Router /api/return_book/:title [get]
+func ReturnBook(c *gin.Context) {
+	bookTitle := c.Param("title")
+
+	conn, err := grpc.Dial(configuration.Neo4J.Service, grpc.WithInsecure())
+	eh.PanicOnError(err, "failed to connect to grpc")
+	defer conn.Close()
+
+	con := pb.NewBookServiceClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+
+	bookT, err := con.ReturnBook(ctx, &pb.BookTitle{Title: bookTitle})
+
+	if err != nil {
+		c.Status(http.StatusNotFound)
+	} else {
+		c.IndentedJSON(http.StatusOK, pb.BookTitle{Title: bookT.Title})
 	}
 }
