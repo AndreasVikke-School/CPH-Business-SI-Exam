@@ -14,7 +14,7 @@ def main():
 
     channel.queue_declare(queue='LoanQueue')
                         
-    chan = grpc.insecure_channel('{0}:50051'.format(os.getenv('REDISIP', "localhost")))
+    chan = grpc.insecure_channel('{0}:50051'.format(os.getenv('POSTGRESIP', "localhost")))
     stub = loan_pb2_grpc.LoanServiceStub(chan)
     def callback(ch, method, properties, body):
         print(" [x] Received %r" % json.loads(body))

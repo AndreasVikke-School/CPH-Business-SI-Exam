@@ -6,7 +6,7 @@ WORKDIR /app
 ENV RABBITIP="rabbitmq.rabbitmq-si"
 ENV RABBITUSER="rabbitmq"
 ENV RABBITPASS="P@ssword!"
-ENV REDISIP="redis-service.services-si"
+ENV POSTGRESIP="postgres-service.services-si"
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
