@@ -10,6 +10,9 @@ System Integration Exam Assignment
   - [Project Achitecture](#project-achitecture)
   - [Process](#process)
 
+## Movie Introduction
+[Full video here](https://youtu.be/1CruzjCiAiU)
+
 ## How to run 
 
 ### Requirements
